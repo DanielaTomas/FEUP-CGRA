@@ -1,10 +1,10 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T10G01
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Diogo Nunes | 202007895 | up202007895@edu.fc.up.pt |
+| Daniela Tomás | 202004946 | up202004946@edu.fc.up.pt |
 
 ----
 
