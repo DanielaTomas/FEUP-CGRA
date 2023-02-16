@@ -26,7 +26,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    //this.diamond = new MyDiamond(this);
+    this.diamond = new MyDiamond(this);
     this.triangle = new MyTriangle(this);
 
     //Objects connected to MyInterface
@@ -94,7 +94,7 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
     this.diamond.display();
-   // this.triangle.display();
+    this.triangle.display();
 
     // ---- END Primitive drawing section
   }
