@@ -30,18 +30,18 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.diamond = new MyDiamond(this);
-    this.triangle = new MyTriangle(this);
+    /*this.triangle = new MyTriangle(this);
     this.parallelogram = new MyParallelogram(this);
     this.triangleSmall = new MyTriangleSmall(this);
-    this.triangleBig = new MyTriangleBig(this);
+    this.triangleBig = new MyTriangleBig(this);*/
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.displayDiamond = true;
-    this.displayTriangle = false;
+    /*this.displayTriangle = false;
     this.displayParallelogram = false;
     this.displayTriangleSmall = false;
-    this.displayTriangleBig = false;
+    this.displayTriangleBig = false;*/
     this.scaleFactor = 1;
   }
   initLights() {
@@ -102,13 +102,34 @@ export class MyScene extends CGFscene {
 
     this.multMatrix(sca);
 
+    //this.translate(1,1,1);
+
+    
+    /*const rotateFigureAngle = Math.PI/4;
+    var rotateDiamond = [
+      Math.cos(rotateFigureAngle), 0, -Math.sin(rotateFigureAngle), 0,
+      Math.sin(rotateFigureAngle), 1, Math.cos(rotateFigureAngle), 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
+    this.multMatrix(rotateDiamond);*/
+
+    const rotateFigureAngle = Math.PI/4;
+    var rotateDiamond = [
+      Math.cos(rotateFigureAngle), -Math.sin(rotateFigureAngle), 0, 0,
+      Math.sin(rotateFigureAngle), Math.cos(rotateFigureAngle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
+    this.multMatrix(rotateDiamond);
+
     // ---- BEGIN Primitive drawing section
 
     if (this.displayDiamond) this.diamond.display();
-    if (this.displayTriangle) this.triangle.display();
+    /*if (this.displayTriangle) this.triangle.display();
     if (this.displayParallelogram) this.parallelogram.display();
     if (this.displayTriangleSmall) this.triangleSmall.display();
-    if (this.displayTriangleBig) this.triangleBig.display();
+    if (this.displayTriangleBig) this.triangleBig.display();*/
     // ---- END Primitive drawing section
   }
 }
