@@ -30,18 +30,22 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.diamond = new MyDiamond(this);
-    /*this.triangle = new MyTriangle(this);
+    this.leftTriangle = new MyTriangle(this);
+    this.rightTriangle = new MyTriangle(this);
+    this.bottomTriangle = new MyTriangle(this);
     this.parallelogram = new MyParallelogram(this);
-    this.triangleSmall = new MyTriangleSmall(this);
-    this.triangleBig = new MyTriangleBig(this);*/
+    this.triangleMid = new MyTriangleSmall(this);
+    this.topTriangle = new MyTriangle(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.displayDiamond = true;
-    /*this.displayTriangle = false;
-    this.displayParallelogram = false;
-    this.displayTriangleSmall = false;
-    this.displayTriangleBig = false;*/
+    this.displayLeftTriangle = true;
+    this.displayRightTriangle = true;
+    this.displayBottomTriangle = true;
+    this.displayParallelogram = true;
+    this.displayTriangleMid = true;
+    this.displayTopTriangle = true;
     this.scaleFactor = 1;
   }
   initLights() {
@@ -102,12 +106,17 @@ export class MyScene extends CGFscene {
 
     this.multMatrix(sca);
 
-    //this.translate(1,1,1);
+    var scaleDiamond = [
+      0.71, 0, 0, 0,
+      0, 0.71, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ];
 
     var angle = Math.PI/4;
     var rotateDiamond = [
-      Math.cos(angle), -Math.sin(angle), 0, 0,
-      Math.sin(angle), Math.cos(angle), 0, 0,
+      Math.cos(angle), Math.sin(angle), 0, 0,
+      -Math.sin(angle), Math.cos(angle), 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1
 		];
@@ -116,10 +125,11 @@ export class MyScene extends CGFscene {
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0,
-      -2, 2, 0, 1
+      2, 1, 0, 1
 		];
 
     this.pushMatrix();
+    this.multMatrix(scaleDiamond);
     this.multMatrix(rotateDiamond);
     this.multMatrix(translateDiamond);
 
@@ -127,11 +137,159 @@ export class MyScene extends CGFscene {
 
     if (this.displayDiamond) this.diamond.display();
     this.popMatrix();
+
+    /**REST OF TANGRAM STARTS HERE */
+
+    //Blue Triangle
+    angle = -3*Math.PI/2;
+    var rotateLeftTriangle = [
+      Math.cos(angle), Math.sin(angle), 0, 0,
+      -Math.sin(angle), Math.cos(angle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
+
+    var translateLeftTriangle = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      -1, 1, 0, 1
+		];
     
-    /*if (this.displayTriangle) this.triangle.display();
+    this.pushMatrix();
+    this.multMatrix(rotateLeftTriangle);
+    this.multMatrix(translateLeftTriangle);
+    if (this.displayLeftTriangle) this.leftTriangle.display();
+    this.popMatrix()
+
+    //Orange Triangle
+    this.pushMatrix();
+    var translateRightTriangle = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      2, -1, 0, 1
+    ];
+
+    this.multMatrix(translateRightTriangle);
+    if (this.displayRightTriangle) this.rightTriangle.display();
+    this.popMatrix()
+
+    //Purple Triangle
+    this.pushMatrix();
+    var scaleBottomTriangle = [
+      0.5, 0, 0, 0,
+      0, 0.5, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ];
+    
+    var translateBottomTriangle = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      1, -3, 0, 1
+    ];
+
+    this.multMatrix(scaleBottomTriangle);
+    this.multMatrix(translateBottomTriangle);
+    if (this.displayBottomTriangle) this.bottomTriangle.display();
+    this.popMatrix()
+
+    //Parallelogram    
+    var angle = Math.PI;
+    var rotateParallelogram1 = [
+      1, 0, 0, 0,
+      0, Math.cos(angle), Math.sin(angle), 0,
+      0, -Math.sin(angle), Math.cos(angle), 0,
+      0, 0, 0, 1
+		];
+
+    var angle = -3*Math.PI/4;
+    var rotateParallelogram2 = [
+      Math.cos(angle), Math.sin(angle), 0, 0,
+      -Math.sin(angle), Math.cos(angle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
+
+    var scaleParallelogram = [
+      0.71, 0, 0, 0,
+      0, 0.71, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ];
+
+    var translateParallelogram = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      -3, -1, 0, 1
+    ];
+
+    this.pushMatrix();
+    this.multMatrix(rotateParallelogram1);
+    this.multMatrix(rotateParallelogram2);
+    this.multMatrix(scaleParallelogram);
+    this.multMatrix(translateParallelogram);
+
     if (this.displayParallelogram) this.parallelogram.display();
-    if (this.displayTriangleSmall) this.triangleSmall.display();
-    if (this.displayTriangleBig) this.triangleBig.display();*/
+    this.popMatrix()
+
+    //Pink Triangle
+    var angle = -3*Math.PI/2;
+    var rotateMidTriangle = [
+      Math.cos(angle), Math.sin(angle), 0, 0,
+      -Math.sin(angle), Math.cos(angle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ];
+
+    var translateMidTriangle = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, -1, 0, 1
+    ];
+
+    this.pushMatrix();
+    this.multMatrix(rotateMidTriangle);
+    this.multMatrix(translateMidTriangle);
+
+    if (this.displayTriangleMid) this.triangleMid.display();
+    this.popMatrix()
+
+    //Purple Triangle
+    var scaleTopTriangle = [
+      0.5, 0, 0, 0,
+      0, 0.5, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ];
+    
+    angle = 3*Math.PI/2;
+    var rotateTopTriangle = [
+      Math.cos(angle), Math.sin(angle), 0, 0,
+      -Math.sin(angle), Math.cos(angle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
+
+    var translateTopTriangle = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      -1, 1, 0, 1
+    ];
+
+    this.pushMatrix();
+    this.multMatrix(scaleTopTriangle);
+    this.multMatrix(rotateTopTriangle);
+    this.multMatrix(translateTopTriangle);
+
+    if (this.displayTopTriangle) this.topTriangle.display();
+    this.popMatrix()
+
     // ---- END Primitive drawing section
   }
 }
