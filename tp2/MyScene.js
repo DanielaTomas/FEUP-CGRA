@@ -104,28 +104,30 @@ export class MyScene extends CGFscene {
 
     //this.translate(1,1,1);
 
+    var angle = Math.PI/4;
+    var rotateDiamond = [
+      Math.cos(angle), -Math.sin(angle), 0, 0,
+      Math.sin(angle), Math.cos(angle), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+		];
     
-    /*const rotateFigureAngle = Math.PI/4;
-    var rotateDiamond = [
-      Math.cos(rotateFigureAngle), 0, -Math.sin(rotateFigureAngle), 0,
-      Math.sin(rotateFigureAngle), 1, Math.cos(rotateFigureAngle), 0,
+    var translateDiamond = [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
       0, 0, 1, 0,
-      0, 0, 0, 1
+      -2, 2, 0, 1
 		];
-    this.multMatrix(rotateDiamond);*/
 
-    const rotateFigureAngle = Math.PI/4;
-    var rotateDiamond = [
-      Math.cos(rotateFigureAngle), -Math.sin(rotateFigureAngle), 0, 0,
-      Math.sin(rotateFigureAngle), Math.cos(rotateFigureAngle), 0, 0,
-      0, 0, 1, 0,
-      0, 0, 0, 1
-		];
+    this.pushMatrix();
     this.multMatrix(rotateDiamond);
+    this.multMatrix(translateDiamond);
 
     // ---- BEGIN Primitive drawing section
 
     if (this.displayDiamond) this.diamond.display();
+    this.popMatrix();
+    
     /*if (this.displayTriangle) this.triangle.display();
     if (this.displayParallelogram) this.parallelogram.display();
     if (this.displayTriangleSmall) this.triangleSmall.display();
