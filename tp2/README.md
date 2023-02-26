@@ -8,3 +8,7 @@
 - This exercise was more difficult than we expected, and the transformations can seem confusing, especially because the 3 axis aren't ordered how we are used to.
 
 ![Screenshot 1](screenshots/cg-t10g01-tp2-1.png)
+
+- In exercise 2 we put in pratice the things we learned in exercise 1 and we learned how to create a cube.
+
+![Screenshot 2](screenshots/cg-t10g01-tp2-2.png)
