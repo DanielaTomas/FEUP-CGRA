@@ -28,6 +28,7 @@ export class MyScene extends CGFscene {
     
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.displayTangram = true;
     this.scaleFactor = 1;
   }
 
@@ -68,7 +69,6 @@ export class MyScene extends CGFscene {
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
-    this.tangram.display();
 
     this.setDefaultAppearance();
 
@@ -92,6 +92,8 @@ export class MyScene extends CGFscene {
     ];
 
     this.multMatrix(sca);
+    
+    if (this.displayTangram) this.tangram.display();
 
     // ---- END Primitive drawing section
   }
