@@ -1,4 +1,5 @@
 import {CGFobject} from '../lib/CGF.js';
+
 /**
  * MyQuad
  * @constructor
@@ -22,8 +23,6 @@ export class MyQuad extends CGFobject {
 		this.indices = [
 			1,3,0,
 			2,3,1,
-            0,3,1,
-			1,3,2,
 		];
 
 		//The defined indices (and corresponding vertices)

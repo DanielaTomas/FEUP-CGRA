@@ -12,3 +12,7 @@
 - In exercise 2 we put in pratice the things we learned in exercise 1 and we learned how to create a cube.
 
 ![Screenshot 2](screenshots/cg-t10g01-tp2-2.png)
+
+- In exercise 3 we learned how to build a cube, but now with various elements instead of drawing triangles.
+
+![Screenshot 3](screenshots/cg-t10g01-tp2-3.png)

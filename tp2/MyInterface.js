@@ -21,6 +21,7 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
         this.gui.add(this.scene, 'displayTangram').name('Display Tangram');
         this.gui.add(this.scene, 'displayUnitCube').name('Display Unit Cube');
+        this.gui.add(this.scene, 'displayUnitCubeQuad').name('Display Unit Cube Quad');
         /*this.gui.add(this.scene, 'displayDiamond').name('Display Diamond');
         this.gui.add(this.scene, 'displayLeftTriangle').name('Display Left Triangle');
         this.gui.add(this.scene, 'displayRightTriangle').name('Display Right Triangle');
