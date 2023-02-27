@@ -43,6 +43,7 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
+        this.globalAmbientLight = 0.3;
 
     }
     initLights() {
@@ -61,6 +62,9 @@ export class MyScene extends CGFscene {
         this.lights[1].disable();
         this.lights[1].setVisible(true);
         this.lights[1].update();
+    }
+    updateGlobalAmbientLight(){
+        this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1);
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
