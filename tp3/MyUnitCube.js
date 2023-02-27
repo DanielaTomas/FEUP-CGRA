@@ -9,7 +9,7 @@ export class MyUnitCube extends CGFobject {
 		super(scene);
 		this.initBuffers();
 	}
-	
+
 	initBuffers() {
 		this.vertices = [
             -0.5, -0.5, -0.5,   //0
@@ -86,4 +86,10 @@ export class MyUnitCube extends CGFobject {
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}
+
+	updateBuffers(){
+        // reinitialize buffers
+        this.initBuffers();
+        this.initNormalVizBuffers();
+    }
 }
