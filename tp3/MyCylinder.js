@@ -42,13 +42,18 @@ export class MyCylinder extends CGFobject {
         }
 
         // Normals
+		var ang = 0
         for(var i = 0; i < this.slices; i++) {
-            //for(var j = 0; j < 4; j++) {
-                //this.normals.push(Math.cos(i * alphaAng + Math.PI / this.slices), Math.sin(i * alphaAng + Math.PI / this.slices),0 );
-            //}
+            for(var j = 0; j < 4; j++) {
+                if(j==0 || j==1)
+                    this.normals.push(Math.cos(ang), Math.sin(ang), 0);
+                else
+                    this.normals.push(0,0,0);
+            }
+			ang+=alphaAng
         }
 
-		//console.log(this.vertices);
+		console.log(this.vertices);
 		//console.log(this.indices);
         
 		//The defined indices (and corresponding vertices)
