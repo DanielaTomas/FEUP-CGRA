@@ -6,6 +6,7 @@ import { MyTangram } from "./MyTangram.js"
 import { MyUnitCube } from "./MyUnitCube.js"
 import { MyPrism } from "./MyPrism.js"
 
+
 /**
 * MyScene
 * @constructor
@@ -35,10 +36,7 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 3, 1);
         this.tangram = new MyTangram(this);
         this.unitCube = new MyUnitCube(this);
-        this.prism = new MyPrism(this, 8, 1);
-
-        this.displayTangram = false;
-        this.displayUnitCube = false;
+        this.prism = new MyPrism(this, 8, 20);
         
         this.objects = [this.plane, this.pyramid, this.cone, this.tangram, this.unitCube, this.prism];
 
@@ -191,14 +189,10 @@ export class MyScene extends CGFscene {
             this.objects[this.selectedObject].enableNormalViz();
         else
             this.objects[this.selectedObject].disableNormalViz();
-
-        if (this.displayTangram) this.tangram.display();
-        if (this.displayUnitCube) this.unitCube.display();
-
-        this.rotate(-Math.PI/2,1,0,0);
-        this.pushMatrix()
-        this.prism.display();
-        this.popMatrix();
+        
+        if (this.selectedObject == 5)
+            this.rotate(-Math.PI/2,1,0,0);
+        
 
         this.objects[this.selectedObject].display();
         this.popMatrix();

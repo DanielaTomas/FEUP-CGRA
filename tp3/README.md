@@ -12,4 +12,6 @@
 
 - During the second half of the first exercise, we applied the different colours to each tangram piece, applying what we learned in the first half
 
-"Comente a eventualidade de, com esta definição de normais, a iluminação calculada ser semelhante à calculada com "Constant Shading"
+![Screenshot 3](screenshots/cg-t10g01-tp3-3.png)
+
+- Because of each face sharing one normal vector with its neighbour, the lighting has an effect similar to constant shading

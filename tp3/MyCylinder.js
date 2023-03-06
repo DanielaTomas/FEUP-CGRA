@@ -1,13 +1,13 @@
 import {CGFobject} from '../lib/CGF.js';
 
 /**
- * MyPrism
+ * MyCylinder
  * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
  */
-export class MyPrism extends CGFobject {
+export class MyCylinder extends CGFobject {
 	constructor(scene, slices, stacks) {
 		super(scene);
 
@@ -43,9 +43,9 @@ export class MyPrism extends CGFobject {
 
         // Normals
         for(var i = 0; i < this.slices; i++) {
-            for(var j = 0; j < 4; j++) {
-                this.normals.push(Math.cos(i * alphaAng + Math.PI / this.slices), Math.sin(i * alphaAng + Math.PI / this.slices),0 );
-            }
+            //for(var j = 0; j < 4; j++) {
+                //this.normals.push(Math.cos(i * alphaAng + Math.PI / this.slices), Math.sin(i * alphaAng + Math.PI / this.slices),0 );
+            //}
         }
 
 		//console.log(this.vertices);
@@ -58,9 +58,11 @@ export class MyPrism extends CGFobject {
 		this.initGLBuffers();
 	}
 
-	updateBuffers(){
+    updateBuffers(){
         // reinitialize buffers
         this.initBuffers();
         this.initNormalVizBuffers();
     }
+
+
 }
