@@ -20,47 +20,36 @@ export class MyPrism extends CGFobject {
 	initBuffers() {
 
 		this.vertices = [];
-        this.indices = [
-			1,2,0,
-			1,3,2,
-			1,4,5,
-			1,0,4,
-			4,3,5,
-			4,2,3			
-		];
+        this.indices = [];
         this.normals = [];
 
-        var ang = 0;
         var alphaAng = 2*Math.PI/this.slices;
 
-		 /* VERTICES */
-		 for (var i = 0; i < this.slices; i++) {
-            for (var j = 0; j < 2; j++) {
-                this.vertices.push(Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng),0 );
-                this.vertices.push(Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng),this.stacks);
+		 // Vertices
+		 for(var i = 0; i < this.slices; i++) {
+            for(var j = 0; j < 2; j++) {
+                this.vertices.push(Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng), 0,
+                		           Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng), this.stacks);
             }
         }
 
-        /* INDICES */
-        for (var i = 0; i < this.slices * 4; i = i + 4) {
+        // Indices
+        for(var i = 0; i < this.slices * 4; i += 4) {
             this.indices.push(i, i + 2, i + 1,
-                i + 1, i + 2, i + 3);
-            this.indices.push(i, i + 1, i + 2,
-                i + 3, i + 2, i + 1);
+                			  i + 1, i + 2, i + 3);
+			this.indices.push(i, i + 1, i + 2,		//desenhar por dentro
+							  i + 3, i + 2, i + 1);
         }
 
-
-        /* NORMALS */
-        for (var i = 0; i < this.slices; i++) {
-            for (var j = 0; j < 2; j++) {
-                this.normals.push(Math.cos(((i) * alphaAng) + 360 * Math.PI/180 / (this.slices * 2)), 0, Math.sin(((i) * alphaAng) + 360 * Math.PI/180 / (this.slices * 2)));
-                this.normals.push(Math.cos(((i) * alphaAng) + 360 * Math.PI/180 / (this.slices * 2)), 0, Math.sin(((i) * alphaAng) + 360 * Math.PI/180 / (this.slices * 2)));
+        // Normals
+        for(var i = 0; i < this.slices; i++) {
+            for(var j = 0; j < 4; j++) {
+                this.normals.push(Math.cos(i * alphaAng + Math.PI / this.slices), Math.sin(i * alphaAng + Math.PI / this.slices),0 );
             }
         }
 
-
-		console.log(this.vertices);
-		console.log(this.indices);
+		//console.log(this.vertices);
+		//console.log(this.indices);
         
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
