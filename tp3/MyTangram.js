@@ -23,15 +23,6 @@ export class MyTangram extends CGFobject {
         this.triangleMid = new MyTriangleSmall(this.scene);
         this.topTriangle = new MyTriangle(this.scene);
 
-		
-        this.displayDiamond = true;
-        this.displayLeftTriangle = true;
-        this.displayRightTriangle = true;
-        this.displayBottomTriangle = true;
-        this.displayParallelogram = true;
-        this.displayTriangleMid = true;
-        this.displayTopTriangle = true;
-
         this.initMaterials(this.scene);
 	}
 
@@ -147,7 +138,7 @@ export class MyTangram extends CGFobject {
     
         // ---- BEGIN Primitive drawing section
     
-        if (this.displayDiamond) this.diamond.display();
+        this.diamond.display();
         this.scene.popMatrix();
     
         /**REST OF TANGRAM STARTS HERE */
@@ -173,7 +164,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(translateLeftTriangle);
         this.leftTriangleMaterial.apply()
 
-        if (this.displayLeftTriangle) this.leftTriangle.display();
+        this.leftTriangle.display();
         this.scene.popMatrix()
     
         //Orange Triangle
@@ -188,7 +179,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(translateRightTriangle);
         this.rightTriangleMaterial.apply();
         
-        if (this.displayRightTriangle) this.rightTriangle.display();
+        this.rightTriangle.display();
         this.scene.popMatrix()
     
         //Purple Triangle
@@ -210,7 +201,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(scaleBottomTriangle);
         this.scene.multMatrix(translateBottomTriangle);
         this.bottomTriangleMaterial.apply();
-        if (this.displayBottomTriangle) this.bottomTriangle.display();
+        this.bottomTriangle.display();
         this.scene.popMatrix()
     
         //Parallelogram    
@@ -251,7 +242,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(translateParallelogram);
         this.parallelogramMaterial.apply();
         
-        if (this.displayParallelogram) this.parallelogram.display();
+        this.parallelogram.display();
         this.scene.popMatrix()
     
         //Pink Triangle
@@ -275,7 +266,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(translateMidTriangle);
         this.MidTriangleMaterial.apply();
     
-        if (this.displayTriangleMid) this.triangleMid.display();
+        this.triangleMid.display();
         this.scene.popMatrix()
     
         //Purple Triangle
@@ -307,7 +298,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(translateTopTriangle);
         this.topTriangleMaterial.apply();
     
-        if (this.displayTopTriangle) this.topTriangle.display();
+        this.topTriangle.display();
         this.scene.popMatrix()
     }
 }
