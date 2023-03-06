@@ -6,9 +6,10 @@
 
 ![Screenshot 1](screenshots/cg-t10g01-tp3-1.png)
 
-- During the first half of the class, we learned how to create normal vectors and how to create our own material
+- During the first half of the first exercise, we learned how to create normal vectors and how to create our own material
 
 ![Screenshot 2](screenshots/cg-t10g01-tp3-2.png)
 
-- During the second half of the class, we applied the different colours to each tangram piece, applying what we learned in the first half
+- During the second half of the first exercise, we applied the different colours to each tangram piece, applying what we learned in the first half
 
+"Comente a eventualidade de, com esta definição de normais, a iluminação calculada ser semelhante à calculada com "Constant Shading"
