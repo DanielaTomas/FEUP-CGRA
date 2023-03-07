@@ -15,3 +15,7 @@
 ![Screenshot 3](screenshots/cg-t10g01-tp3-3.png)
 
 - Because of each face sharing one normal vector with its neighbour, the lighting has an effect similar to constant shading
+
+![Screenshot 4](screenshots/cg-t10g01-tp3-4.png)
+
+- Now, with reduced duplicate vertices and with only one normal vector, lighting makes the cylinder appear much smoother than previously seen on the prism

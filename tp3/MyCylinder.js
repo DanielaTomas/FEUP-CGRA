@@ -27,33 +27,59 @@ export class MyCylinder extends CGFobject {
 
 		 // Vertices
 		 for(var i = 0; i < this.slices; i++) {
-            for(var j = 0; j < 2; j++) {
+            for(var j = 0; j < 1; j++) { 
                 this.vertices.push(Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng), 0,
                 		           Math.cos((i + j) * alphaAng), Math.sin((i + j) * alphaAng), this.stacks);
-            }
+            }       
         }
 
+        console.log(this.vertices.length/3);
+
         // Indices
-        for(var i = 0; i < this.slices * 4; i += 4) {
+        for(var i = 0; i < this.slices * 2; i += 2) {
+            if( i + 2 == this.vertices.length/3 ) { //dont ask
+                var max = i;
+                i = i-(this.vertices.length/3) + 1;
+                this.indices.push(max, i + 2, max + 1,
+                                  i + 1, i + 2, max);
+                this.indices.push(max, max + 1,i + 2,
+                                  i + 1, max , i + 2);
+                break;
+            }
             this.indices.push(i, i + 2, i + 1,
-                			  i + 1, i + 2, i + 3);
-			this.indices.push(i, i + 1, i + 2,		//desenhar por dentro
-							  i + 3, i + 2, i + 1);
+                            i + 1, i + 2, i + 3);
+            this.indices.push(i, i + 1, i + 2,		//desenhar por dentro
+                            i + 3, i + 2, i + 1);
+                
         }
 
         // Normals
 		var ang = 0
         for(var i = 0; i < this.slices; i++) {
-            for(var j = 0; j < 4; j++) {
-                if(j==0 || j==1)
-                    this.normals.push(Math.cos(ang), Math.sin(ang), 0);
-                else
-                    this.normals.push(0,0,0);
+            for(var j = 0; j < 2 ; j++) {
+
+                this.normals.push(Math.cos(ang), Math.sin(ang), 0);
+
             }
 			ang+=alphaAng
         }
 
-		console.log(this.vertices);
+
+        /*
+        for (var i = 0; i < this.vertices.length; i+=3){
+            console.log("vertice " + (i/3) + " -> x: " + this.vertices[i] + " y: " + this.vertices[i + 1] + " z:" + this.vertices[i + 2] );
+        }
+        
+        for (var i = 0; i < this.indices.length; i+=3){
+            console.log("indice -> x: " + this.indices[i] + " y: " + this.indices[i + 1] + " z:" + this.indices[i + 2] );
+        }
+
+        for (var i = 0; i < this.normals.length; i+=3){
+            console.log("normals " + (i/3) + " -> x: " + this.normals[i] + " y: " + this.normals[i + 1] + " z:" + this.normals[i + 2] );
+        }
+        */
+       
+		//console.log(this.vertices);
 		//console.log(this.indices);
         
 		//The defined indices (and corresponding vertices)
