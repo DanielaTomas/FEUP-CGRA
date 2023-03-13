@@ -20,6 +20,10 @@ export class MyUnitCubeQuad extends CGFobject {
 
         if(upTex !== undefined){
             this.upMaterial = new CGFappearance(this.scene);
+            //this.upMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
+            //this.upMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+            //this.upMaterial.setSpecular(1.0, 1.0, 1.0, 1.0);
+            //this.upMaterial.setShininess(10.0);
             this.upMaterial.setTexture(upTex)
         }
 
@@ -59,11 +63,21 @@ export class MyUnitCubeQuad extends CGFobject {
         this.backQuad.enableNormalViz();
         this.upQuad.enableNormalViz();
     }
+
+    toggleTextureFiltering(){
+        if(this.scene.displayTextureFiltering)
+            this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        else
+            this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
+
+    }
 	
     display(){
         //Inf
         if(this.infMaterial !== undefined) this.infMaterial.apply();
 
+        this.toggleTextureFiltering();
+    
         this.infQuad.display();
         
         //Left
@@ -73,6 +87,8 @@ export class MyUnitCubeQuad extends CGFobject {
         this.scene.rotate(-Math.PI/2,0,1,0);
 
         if(this.leftMaterial !== undefined) this.leftMaterial.apply();
+
+        this.toggleTextureFiltering();// only need to apply to one of the sides since they all share the same texture
 
         this.leftQuad.display();
         this.scene.popMatrix();
@@ -116,6 +132,8 @@ export class MyUnitCubeQuad extends CGFobject {
         this.scene.translate(0,-1,0);
 
         if(this.upMaterial !== undefined) this.upMaterial.apply();
+
+        this.toggleTextureFiltering();
 
         this.upQuad.display();
         this.scene.popMatrix();

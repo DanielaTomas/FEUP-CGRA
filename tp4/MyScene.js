@@ -59,7 +59,8 @@ export class MyScene extends CGFscene {
 
         //-------Objects connected to MyInterface
         this.displayAxis = true;
-        this.displayMyQuad = false
+        this.displayMyQuad = false;
+        this.displayTextureFiltering = false;
         this.scaleFactor = 2;
         this.selectedTexture = -1;        
         this.wrapS = 0;
@@ -76,8 +77,11 @@ export class MyScene extends CGFscene {
       }
 
     initLights() {
-        this.lights[0].setPosition(5, 2, 5, 1);
+        this.setGlobalAmbientLight(0.5, 0.5, 0.5, 1.0);
+
+        this.lights[0].setPosition(5, 2, -1, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
     }
@@ -132,15 +136,16 @@ export class MyScene extends CGFscene {
 
         //this.unitCube.enableNormalViz();
 
-        if(this.displayMyQuad) this.quadMaterial.apply();
+        if(this.displayMyQuad){
+            this.quadMaterial.apply();
+            this.quad.display();
+        } 
 
         // Default texture filtering in WebCGF is LINEAR. 
         // Uncomment next line for NEAREST when magnifying, or 
         // add a checkbox in the GUI to alternate in real time
         
-        // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-
-        if(this.displayMyQuad) this.quad.display();
+        //if(this.displayTextureFiltering) this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
         //this.tangram.display();
         this.unitCube.display();
