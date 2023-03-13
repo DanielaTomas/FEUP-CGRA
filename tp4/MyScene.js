@@ -25,18 +25,13 @@ export class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
         this.enableTextures(true);
-
-        //Load cube textures
-        this.mineTopTexture   = new CGFtexture(this, "./images/mineTop.png");
-        this.mineSideTexture  = new CGFtexture(this, "./images/mineSide.png");
-        this.mineInfTexture   = new CGFtexture(this, "./images/mineBottom.png")
+        
 
         
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
         this.tangram = new MyTangram(this);
-        this.unitCube = new MyUnitCubeQuad(this,this.mineTopTexture,this.mineSideTexture, this.mineSideTexture, this.mineSideTexture, this.mineSideTexture, this.mineBottomTexture);
 
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
@@ -52,6 +47,14 @@ export class MyScene extends CGFscene {
         this.texture1 = new CGFtexture(this, 'images/board.jpg');
         this.texture2 = new CGFtexture(this, 'images/floor.png');
         this.texture3 = new CGFtexture(this, 'images/window.jpg');
+        //------ Load cube textures
+        this.mineTopTexture  = new CGFtexture(this, "./images/mineTop.png");
+        this.mineSideTexture = new CGFtexture(this, "./images/mineSide.png");
+        this.mineBottomTexture  = new CGFtexture(this, "./images/mineBottom.png")
+        
+
+        //------- Unit cube
+        this.unitCube = new MyUnitCubeQuad(this,this.mineTopTexture,this.mineSideTexture, this.mineSideTexture, this.mineSideTexture, this.mineSideTexture, this.mineBottomTexture);
         //-------
 
         //-------Objects connected to MyInterface

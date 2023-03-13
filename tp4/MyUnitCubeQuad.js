@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../lib/CGF.js';
+import {CGFobject,CGFappearance,CGFtexture} from '../lib/CGF.js';
 import {MyQuad } from "./MyQuad.js"
 
 /**
@@ -17,34 +17,48 @@ export class MyUnitCubeQuad extends CGFobject {
         this.backQuad = new MyQuad(this.scene);
         this.upQuad = new MyQuad(this.scene);
 
-        if(this.upTex !== undefined){
+        this.textureUp = upTex;
+
+        this.textureFront = frontTex;
+
+        this.textureRight = rightTex;
+
+        this.textureBack = backTex;
+
+        this.textureLeft = leftTex;
+
+        this.textureInf = infTex;
+
+        //if (this.upTex === undefined) print();
+
+        if(this.textureUp !== undefined){
             this.upMaterial = new CGFappearance(this.scene);
-            this.upMaterial.setTexture(this.upTex)
+            this.upMaterial.setTexture(this.textureUp)
         }
 
-        if(this.frontTex !== undefined){
+        if(this.textureFront !== undefined){
             this.frontMaterial = new CGFappearance(this.scene);
-            this.frontMaterial.setTexture(this.frontTex)
+            this.frontMaterial.setTexture(this.textureFront)
         }
 
-        if(this.rightTex !== undefined){
+        if(this.textureRight !== undefined){
             this.rightMaterial = new CGFappearance(this.scene);
-            this.rightMaterial.setTexture(this.rightTex)
+            this.rightMaterial.setTexture(this.textureRight)
         }
 
-        if(this.backTex !== undefined){
+        if(this.textureBack !== undefined){
             this.backMaterial = new CGFappearance(this.scene);
-            this.backMaterial.setTexture(this.backTex)
+            this.backMaterial.setTexture(this.textureBack)
         }
         
-        if(this.leftTex !== undefined){
+        if(this.textureLeft !== undefined){
             this.leftMaterial = new CGFappearance(this.scene);
-            this.leftMaterial.setTexture(this.leftTex)
+            this.leftMaterial.setTexture(this.textureLeft)
         }
 
-        if(this.infTex !== undefined){
+        if(this.textureInf !== undefined){
             this.infMaterial = new CGFappearance(this.scene);
-            this.infMaterial.setTexture(this.infTex)
+            this.infMaterial.setTexture(this.textureInf)
         }
 
 		this.initBuffers();
