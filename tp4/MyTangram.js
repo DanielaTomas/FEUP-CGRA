@@ -1,6 +1,10 @@
 import {CGFobject, CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MyDiamond } from "./MyDiamond.js";
 import { MyTriangle } from "./MyTriangle.js";
+import { MyTriangleBlue } from "./MyTriangleBlue.js";
+import { MyTriangleOrange } from "./MyTriangleOrange.js";
+import { MyTrianglePurple } from "./MyTrianglePurple.js";
+import { MyTriangleRed } from "./MyTriangleRed.js";
 import { MyParallelogram } from "./MyParallelogram.js";
 import { MyTriangleSmall } from "./MyTriangleSmall.js";
 
@@ -16,12 +20,12 @@ export class MyTangram extends CGFobject {
         //Initialize scene objects
         
         this.diamond = new MyDiamond(this.scene);
-        this.leftTriangle = new MyTriangle(this.scene);
-        this.rightTriangle = new MyTriangle(this.scene);
-        this.bottomTriangle = new MyTriangle(this.scene);
+        this.leftTriangle = new MyTriangleBlue(this.scene);
+        this.rightTriangle = new MyTriangleOrange(this.scene);
+        this.bottomTriangle = new MyTrianglePurple(this.scene);
         this.parallelogram = new MyParallelogram(this.scene);
         this.triangleMid = new MyTriangleSmall(this.scene);
-        this.topTriangle = new MyTriangle(this.scene);
+        this.topTriangle = new MyTriangleRed(this.scene);
 
 
         this.initMaterials(this.scene);
@@ -35,54 +39,59 @@ export class MyTangram extends CGFobject {
 
         // Diamond
         this.diamondMaterial = new CGFappearance(scene);
-        this.diamondMaterial.setAmbient(0.0, 1.0, 0.0, 1.0);
+        /*this.diamondMaterial.setAmbient(0.0, 1.0, 0.0, 1.0);
         this.diamondMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.diamondMaterial.setSpecular(0.0, 1.0, 0.0, 1.0);
-        this.diamondMaterial.setShininess(10.0);
-
-        this.material.setTexture(tangramTexture)
+        this.diamondMaterial.setShininess(10.0);*/
+        this.diamondMaterial.setTexture(this.tangramTexture)
 
         // Left Triangle
         this.leftTriangleMaterial = new CGFappearance(scene);
-        this.leftTriangleMaterial.setAmbient(0.0, 0.5, 1.0, 1.0);
+       /* this.leftTriangleMaterial.setAmbient(0.0, 0.5, 1.0, 1.0);
         this.leftTriangleMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.leftTriangleMaterial.setSpecular(0.0, 0.0, 1.0, 1.0);
-        this.leftTriangleMaterial.setShininess(10.0);
+        this.leftTriangleMaterial.setShininess(10.0); */
+        this.leftTriangleMaterial.setTexture(this.tangramTexture)
 
         //Right Triangle
         this.rightTriangleMaterial = new CGFappearance(scene);
-        this.rightTriangleMaterial.setAmbient(1.0, 0.65, 0.0, 1.0);
+      /*  this.rightTriangleMaterial.setAmbient(1.0, 0.65, 0.0, 1.0);
         this.rightTriangleMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.rightTriangleMaterial.setSpecular(1.0, 0.5, 0.0, 1.0);
-        this.rightTriangleMaterial.setShininess(10.0);
+        this.rightTriangleMaterial.setShininess(10.0); */
+        this.rightTriangleMaterial.setTexture(this.tangramTexture)
 
         //Bottom Triangle
         this.bottomTriangleMaterial = new CGFappearance(scene);
-        this.bottomTriangleMaterial.setAmbient(0.63, 0.13, 0.94, 1.0);
+        /*this.bottomTriangleMaterial.setAmbient(0.63, 0.13, 0.94, 1.0);
         this.bottomTriangleMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.bottomTriangleMaterial.setSpecular(0.5, 0.1, 0.9, 1.0);
-        this.bottomTriangleMaterial.setShininess(10.0);
+        this.bottomTriangleMaterial.setShininess(10.0);*/
+        this.bottomTriangleMaterial.setTexture(this.tangramTexture)
 
         //Paralelogram
         this.parallelogramMaterial = new CGFappearance(scene);
-        this.parallelogramMaterial.setAmbient(1.0, 1.0, 0.0, 1.0);
+        /*this.parallelogramMaterial.setAmbient(1.0, 1.0, 0.0, 1.0);
         this.parallelogramMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.parallelogramMaterial.setSpecular(1.0, 1.0, 0.0, 1.0);
-        this.parallelogramMaterial.setShininess(10.0);
+        this.parallelogramMaterial.setShininess(10.0);*/
+        this.parallelogramMaterial.setTexture(this.tangramTexture)
 
         //Mid Triangle
         this.MidTriangleMaterial = new CGFappearance(scene);
-        this.MidTriangleMaterial.setAmbient(1.0, 0.75, 0.8, 1.0);
+     /*   this.MidTriangleMaterial.setAmbient(1.0, 0.75, 0.8, 1.0);
         this.MidTriangleMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.MidTriangleMaterial.setSpecular(1.0, 0.6, 0.0, 1.0);
-        this.MidTriangleMaterial.setShininess(10.0);
+        this.MidTriangleMaterial.setShininess(10.0); */
+        this.MidTriangleMaterial.setTexture(this.tangramTexture)
 
         //Top Triangle
         this.topTriangleMaterial = new CGFappearance(scene);
-        this.topTriangleMaterial.setAmbient(1.0, 0.0, 0.0, 1.0);
+      /*  this.topTriangleMaterial.setAmbient(1.0, 0.0, 0.0, 1.0);
         this.topTriangleMaterial.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.topTriangleMaterial.setSpecular(1.0, 0.0, 0.0, 1.0);
-        this.topTriangleMaterial.setShininess(10.0);
+        this.topTriangleMaterial.setShininess(10.0);*/
+        this.topTriangleMaterial.setTexture(this.tangramTexture)
 
 
     }
@@ -143,7 +152,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(scaleDiamond);
         this.scene.multMatrix(rotateDiamond);
         this.scene.multMatrix(translateDiamond);
-        //this.diamondMaterial.apply()
+        this.diamondMaterial.apply()
         //this.scene.customMaterial.apply();
     
         // ---- BEGIN Primitive drawing section

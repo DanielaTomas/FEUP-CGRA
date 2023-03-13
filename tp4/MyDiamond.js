@@ -24,6 +24,13 @@ export class MyDiamond extends CGFobject {
 			1, 3, 2
 		];
 
+		this.texCoords = [
+			0, 0.5, //A cima esquerda
+			0.25, 0.75, //D
+			0.25, 0.25, //B
+			0.5, 0.5, //C
+		];	
+
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
 		this.primitiveType = this.scene.gl.TRIANGLES;
