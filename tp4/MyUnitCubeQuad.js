@@ -17,52 +17,48 @@ export class MyUnitCubeQuad extends CGFobject {
         this.backQuad = new MyQuad(this.scene);
         this.upQuad = new MyQuad(this.scene);
 
-        this.textureUp = upTex;
 
-        this.textureFront = frontTex;
-
-        this.textureRight = rightTex;
-
-        this.textureBack = backTex;
-
-        this.textureLeft = leftTex;
-
-        this.textureInf = infTex;
-
-        //if (this.upTex === undefined) print();
-
-        if(this.textureUp !== undefined){
+        if(upTex !== undefined){
             this.upMaterial = new CGFappearance(this.scene);
-            this.upMaterial.setTexture(this.textureUp)
+            this.upMaterial.setTexture(upTex)
         }
 
-        if(this.textureFront !== undefined){
+        if(frontTex !== undefined){
             this.frontMaterial = new CGFappearance(this.scene);
-            this.frontMaterial.setTexture(this.textureFront)
+            this.frontMaterial.setTexture(frontTex)
         }
 
-        if(this.textureRight !== undefined){
+        if(rightTex !== undefined){
             this.rightMaterial = new CGFappearance(this.scene);
-            this.rightMaterial.setTexture(this.textureRight)
+            this.rightMaterial.setTexture(rightTex)
         }
 
-        if(this.textureBack !== undefined){
+        if(backTex !== undefined){
             this.backMaterial = new CGFappearance(this.scene);
-            this.backMaterial.setTexture(this.textureBack)
+            this.backMaterial.setTexture(backTex)
         }
         
-        if(this.textureLeft !== undefined){
+        if(leftTex !== undefined){
             this.leftMaterial = new CGFappearance(this.scene);
-            this.leftMaterial.setTexture(this.textureLeft)
+            this.leftMaterial.setTexture(leftTex)
         }
 
-        if(this.textureInf !== undefined){
+        if(infTex !== undefined){
             this.infMaterial = new CGFappearance(this.scene);
-            this.infMaterial.setTexture(this.textureInf)
+            this.infMaterial.setTexture(infTex)
         }
 
 		this.initBuffers();
 	}
+
+    enableNormalViz(){
+        this.infQuad.enableNormalViz();
+        this.leftQuad.enableNormalViz();
+        this.rightQuad.enableNormalViz();
+        this.frontQuad.enableNormalViz();
+        this.backQuad.enableNormalViz();
+        this.upQuad.enableNormalViz();
+    }
 	
     display(){
         //Inf
@@ -74,6 +70,7 @@ export class MyUnitCubeQuad extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0.5,0);
         this.scene.rotate(-Math.PI/2,0,0,1);
+        this.scene.rotate(-Math.PI/2,0,1,0);
 
         if(this.leftMaterial !== undefined) this.leftMaterial.apply();
 
@@ -84,6 +81,8 @@ export class MyUnitCubeQuad extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.5,0.5,0);
         this.scene.rotate(Math.PI/2,0,0,1);
+        this.scene.rotate(Math.PI/2,0,1,0);
+
 
         if(this.rightMaterial !== undefined) this.rightMaterial.apply();
 
@@ -104,6 +103,7 @@ export class MyUnitCubeQuad extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0,0.5,-0.5);
         this.scene.rotate(Math.PI/2,1,0,0);
+        this.scene.rotate(Math.PI,0,1,0);
 
         if(this.backMaterial !== undefined) this.backMaterial.apply();
 

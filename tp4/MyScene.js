@@ -130,6 +130,8 @@ export class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
+        //this.unitCube.enableNormalViz();
+
         if(this.displayMyQuad) this.quadMaterial.apply();
 
         // Default texture filtering in WebCGF is LINEAR. 
