@@ -2,6 +2,8 @@ attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
 
+
+uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
 
 uniform mat4 uMVMatrix;
@@ -19,6 +21,6 @@ void main() {
 
 	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + heightMultiplier, 1.0);
 
-	vTextureCoord = aTextureCoord;
+	vTextureCoord = manipulatedTexCoord;
 }
 
