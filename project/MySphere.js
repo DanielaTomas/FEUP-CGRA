@@ -6,13 +6,15 @@ import {CGFobject} from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
+ * @param drawInsideOut - draw sphere so its only visible from the inside
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks, drawInsideOut) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
+        this.drawInsideOut = drawInsideOut
 		
 		this.initBuffers();
 	}
@@ -42,16 +44,29 @@ export class MySphere extends CGFobject {
               var z = Math.sin(-beta) * sinAlpha;
               this.vertices.push(x, y, z);
               this.texCoords.push(long/this.slices, lat/this.stacks);
+              //this.texCoords.push( lat/this.stacks,long/this.slices,);
 
               if (lat < this.stacks && long < this.slices) {
                 var current = lat * (this.slices + 1) + long;
                 var next = current + this.slices + 1;
                 
-                this.indices.push(current + 1, current, next,
+                if(this.drawInsideOut){
+                    this.indices.push( current, current + 1, next,
+                                    next, current + 1, next + 1);
+                }
+                else{
+                    this.indices.push(current + 1, current, next,
                                   current + 1, next, next + 1);
+                }
+                          
               }
-      
-              this.normals.push(x, y, z);
+
+              if(this.drawInsideOut) {
+                this.normals.push(x, y, z);
+              }
+              else {
+                  this.normals.push(-x, -y, -z);
+              }
               beta += betaAng;
       
               
