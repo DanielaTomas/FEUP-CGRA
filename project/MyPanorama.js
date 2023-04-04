@@ -32,7 +32,7 @@ export class MyPanorama extends CGFobject {
         
         this.scene.rotate(Math.PI/2,0,1,0)
         this.scene.scale(200,200,200)
-        this.scene.sphere.display();
+        this.sphere.display();
         this.scene.popMatrix();
     }
 

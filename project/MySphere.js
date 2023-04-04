@@ -14,14 +14,14 @@ export class MySphere extends CGFobject {
 
 		this.slices = slices;
 		this.stacks = stacks;
-        this.drawInsideOut = drawInsideOut
+    this.drawInsideOut = drawInsideOut;
 		
 		this.initBuffers();
 	}
 	
 	initBuffers() {
 
-		this.vertices = [];
+		    this.vertices = [];
         this.indices = [];
         this.normals = [];
         this.texCoords = [];
@@ -32,7 +32,7 @@ export class MySphere extends CGFobject {
         var beta = 0;
         var alphaAng = Math.PI / this.stacks;
         var betaAng = (2 * Math.PI) / this.slices;
-        
+
         for (let lat = 0; lat <= this.stacks; lat++) {
             var sinAlpha = Math.sin(alpha);
             var cosAlpha = Math.cos(alpha);
@@ -44,19 +44,20 @@ export class MySphere extends CGFobject {
               var z = Math.sin(-beta) * sinAlpha;
               this.vertices.push(x, y, z);
               this.texCoords.push(long/this.slices, lat/this.stacks);
-              //this.texCoords.push( lat/this.stacks,long/this.slices,);
+              
+              //this.texCoords.push( lat/this.stacks,long/this.slices);
 
               if (lat < this.stacks && long < this.slices) {
                 var current = lat * (this.slices + 1) + long;
                 var next = current + this.slices + 1;
                 
-                if(this.drawInsideOut){
+                if(this.drawInsideOut === true){
                     this.indices.push( current, current + 1, next,
                                     next, current + 1, next + 1);
                 }
                 else{
-                    this.indices.push(current + 1, current, next,
-                                  current + 1, next, next + 1);
+                    this.indices.push( current + 1, current, next,
+                                       current + 1, next, next +1);
                 }
                           
               }
