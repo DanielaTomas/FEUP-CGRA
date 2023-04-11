@@ -94,7 +94,7 @@ export class MyScene extends CGFscene {
     
 
     this.pushMatrix();
-    this.bird.display();
+    //this.bird.display();
 
     this.appearance.apply();
     this.translate(0,-100,0);
