@@ -1,8 +1,8 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
+import { MyUnitCube } from "./MyUnitCube.js";
 
 /**
  * MyScene
@@ -30,6 +30,7 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.bird = new MyBird(this)
+    this.unitCube = new MyUnitCube(this)
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -37,7 +38,8 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-    this.panoramaTexture = new CGFtexture(this, "images/panorama4.jpg");
+    this.panoramaTexture = new CGFtexture(this, "images/panorama_do_gaspar.jpg");
+    this.birdTexture = new CGFtexture(this, "images/textura_do_gaspar.jpg");
     this.panorama = new MyPanorama(this, this.panoramaTexture)
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
@@ -48,6 +50,13 @@ export class MyScene extends CGFscene {
     this.appearance.setAmbient(10.0, 10.0, 10.0, 1.0);
     this.appearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.appearance.setSpecular(0.8, 0.8, 0.8, 1.0);
+
+    this.birdAppearance = new CGFappearance(this);
+    this.birdAppearance.setTexture(this.birdTexture);
+    this.birdAppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.birdAppearance.setAmbient(10.0, 10.0, 10.0, 1.0);
+    this.birdAppearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.birdAppearance.setSpecular(0.8, 0.8, 0.8, 1.0);
 
   }
 
@@ -63,7 +72,7 @@ export class MyScene extends CGFscene {
       1.0,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(10, 10, 5),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -73,6 +82,24 @@ export class MyScene extends CGFscene {
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+  }
+
+  checkKeys() {
+    var text = "Keys pressed: ";
+    var keysPressed = false;
+
+    if (this.gui.isKeyPressed("KeyW")){
+      text += " W ";
+      keysPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyS")){
+      text += " S "
+      keysPressed = true;
+    }
+
+    if (keysPressed)
+      console.log(text)
   }
 
   display() {
@@ -86,6 +113,9 @@ export class MyScene extends CGFscene {
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
+    //Atualizar todas as luzes 
+    this.lights[0].update();
+
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
@@ -94,9 +124,11 @@ export class MyScene extends CGFscene {
     
 
     this.pushMatrix();
-    //this.bird.display();
+    this.birdAppearance.apply();
+    this.bird.display();
 
     this.appearance.apply();
+
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
