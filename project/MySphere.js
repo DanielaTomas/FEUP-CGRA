@@ -9,13 +9,14 @@ import {CGFobject} from '../lib/CGF.js';
  * @param drawInsideOut - draw sphere so its only visible from the inside
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, drawInsideOut) {
+	constructor(scene, slices, stacks, drawInsideOut, texMult) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
     this.drawInsideOut = drawInsideOut;
-		
+		this.texMult = texMult;
+
 		this.initBuffers();
 	}
 	
@@ -43,7 +44,7 @@ export class MySphere extends CGFobject {
               var y = cosAlpha;
               var z = Math.sin(-beta) * sinAlpha;
               this.vertices.push(x, y, z);
-              this.texCoords.push(long/this.slices, lat/this.stacks);
+              this.texCoords.push(long/this.slices*this.texMult, lat/this.stacks*this.texMult);
               
               //this.texCoords.push( lat/this.stacks,long/this.slices);
 

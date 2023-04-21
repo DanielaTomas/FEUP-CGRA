@@ -11,7 +11,7 @@ export class MyPanorama extends CGFobject {
 		super(scene);
 
 		this.texture = texture;
-        this.sphere = new MySphere(this.scene,30,30,true);
+        this.sphere = new MySphere(this.scene,30,30,true,1);
 
         this.sphereMaterial = new CGFappearance(this.scene);
         this.sphereMaterial.setTexture(this.texture)

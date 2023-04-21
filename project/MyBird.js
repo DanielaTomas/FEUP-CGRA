@@ -3,7 +3,9 @@ import { MySphere } from "./MySphere.js";
 import { MyCone } from "./MyCone.js";
 import { MyUnitCube } from "./MyUnitCube.js";
 import { MyParallelogram } from './MyParallelogram.js';
-import { MyTriangle } from './MyTriangle.js';
+import { MyTriangleWings } from './MyTriangleWings.js';
+import { MyTriangleTail } from './MyTriangleTail.js';
+
 
 /**
  * MyPanorama
@@ -14,16 +16,17 @@ export class MyBird extends CGFobject {//Gaspar
 	constructor(scene) {
 		super(scene);
 
-        this.bodySphere = new MySphere(this.scene,10,15,false);
-        this.headSphere = new MySphere(this.scene,10,15,false);
+        this.bodySphere = new MySphere(this.scene,10,15,false,3);
+        this.headSphere = new MySphere(this.scene,10,15,false,3);
         this.beakCone = new MyCone(this.scene,10,3);
         this.leftEyeCube = new MyUnitCube(this.scene);
         this.rightEyeCube = new MyUnitCube(this.scene);
         this.leftWingParallelogram = new MyParallelogram(this.scene);
         this.rightWingParallelogram = new MyParallelogram(this.scene);
-        this.leftWingTriangle = new MyTriangle(this.scene);
-        this.rightWingTriangle = new MyTriangle(this.scene);
-        this.tailTriangle = new MyTriangle(this.scene);
+        this.leftWingTriangle = new MyTriangleWings(this.scene);
+        this.rightWingTriangle = new MyTriangleWings(this.scene);
+        this.tailTriangle = new MyTriangleTail(this.scene);
+
         this.initBuffers();
 
 	}
@@ -99,6 +102,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.rotate(Math.PI,0,0,1);
         this.tailTriangle.display();
         this.scene.popMatrix();
+
     }
 
 }
