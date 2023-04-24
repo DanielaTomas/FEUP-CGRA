@@ -29,8 +29,13 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.bird = new MyBird(this)
-    this.unitCube = new MyUnitCube(this)
+    this.bird = new MyBird(this);
+    this.unitCube = new MyUnitCube(this);
+
+    this.birdOscilationShader = new CGFshader(this.gl, "shaders/birdoOcillationAnim.vert", "shaders/birdoOcillationAnim.frag")
+
+    this.birdOscilationShader.setUniformsValues({ uSampler2: 1 });
+    this.birdOscilationShader.setUniformsValues({ timeFactor: 0 });
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -51,6 +56,9 @@ export class MyScene extends CGFscene {
     this.appearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.appearance.setSpecular(0.8, 0.8, 0.8, 1.0);
 
+    this.setUpdatePeriod(50);
+
+    this.appStartTime = Date.now();
   }
 
   initLights() {
@@ -95,6 +103,13 @@ export class MyScene extends CGFscene {
       console.log(text)
   }
 
+  update(t) {
+
+    this.birdOscilationShader.setUniformsValues({ timeFactor: t / 100 % 100 });
+    console.log("updating");
+    
+	}
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -118,9 +133,12 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
 
+		this.setActiveShader(this.birdOscilationShader);
+
     this.bird.display();
+    this.setActiveShader(this.defaultShader);
     this.appearance.apply();
-    this.translate(0,-100,0);
+    this.translate(0,-3,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
