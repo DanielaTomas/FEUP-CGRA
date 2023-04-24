@@ -39,7 +39,7 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
     this.panoramaTexture = new CGFtexture(this, "images/panorama_do_gaspar.jpg");
-    this.birdTexture = new CGFtexture(this, "images/textura_do_gaspar.jpg");
+
     this.panorama = new MyPanorama(this, this.panoramaTexture)
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
@@ -50,13 +50,6 @@ export class MyScene extends CGFscene {
     this.appearance.setAmbient(10.0, 10.0, 10.0, 1.0);
     this.appearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.appearance.setSpecular(0.8, 0.8, 0.8, 1.0);
-
-    this.birdAppearance = new CGFappearance(this);
-    this.birdAppearance.setTexture(this.birdTexture);
-    this.birdAppearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.birdAppearance.setAmbient(10.0, 10.0, 10.0, 1.0);
-    this.birdAppearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
-    this.birdAppearance.setSpecular(0.8, 0.8, 0.8, 1.0);
 
   }
 
@@ -124,11 +117,9 @@ export class MyScene extends CGFscene {
     
 
     this.pushMatrix();
-    this.birdAppearance.apply();
+
     this.bird.display();
-
     this.appearance.apply();
-
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
