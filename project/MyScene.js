@@ -3,7 +3,6 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyUnitCube } from "./MyUnitCube.js";
-import { MyAnimatedObject } from "./MyAnimatedObject.js";
 
 /**
  * MyScene
@@ -55,7 +54,7 @@ export class MyScene extends CGFscene {
     this.setUpdatePeriod(50);
 
     this.appStartTime = Date.now();
-
+    this.animVal = 0;
     this.startVal = 0;
     this.endVal = 1;
     this.animStartTimeSecs = 1;
@@ -109,7 +108,10 @@ export class MyScene extends CGFscene {
 
     var timeSinceAppStart = (t-this.appStartTime)/1000.0;
     this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
-
+    this.startVal + 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart) * this.length;
+    this.bird.wingRotateAngle = Math.PI / 4 * Math.sin((2*Math.PI) * timeSinceAppStart);
+    //this.bird.wingTranslate = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
+    //amplitude * Math.sin(2 * Math.PI * frequency * x);
     this.checkKeys();
 	}
 

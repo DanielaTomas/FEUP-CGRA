@@ -8,7 +8,7 @@ import { MyTriangleTail } from './MyTriangleTail.js';
 
 
 /**
- * MyPanorama
+ * MyBird
  * @constructor
  * @param CGFtexture
  */
@@ -16,8 +16,8 @@ export class MyBird extends CGFobject {//Gaspar
 	constructor(scene) {
 		super(scene);
 
-        this.bodySphere = new MySphere(this.scene,10,15,false,3);
-        this.headSphere = new MySphere(this.scene,10,15,false,3);
+        this.bodySphere = new MySphere(this.scene,10,15,false,6);
+        this.headSphere = new MySphere(this.scene,10,15,false,4);
         this.beakCone = new MyCone(this.scene,10,3);
         this.leftEyeCube = new MyUnitCube(this.scene);
         this.rightEyeCube = new MyUnitCube(this.scene);
@@ -29,6 +29,9 @@ export class MyBird extends CGFobject {//Gaspar
 
         this.scene.enableTextures(true);
         this.birdTexture = new CGFtexture(this.scene, "images/textura_do_gaspar.jpg");
+
+        this.wingRotateAngle = 0;
+        this.wingTranslate = 0;
 
         this.initMaterials(this.scene);
         this.initBuffers();
@@ -84,6 +87,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.translate(-0.4,0,0.3)
         this.scene.scale(0.4,0.4,0.5)
         this.scene.rotate(Math.PI/2,1,0,0);
+        this.scene.rotate(this.wingRotateAngle,1,0,0);
         this.leftWingParallelogram.display();
         this.scene.popMatrix();
 
@@ -91,14 +95,17 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.translate(-0.4,0,-0.3)
         this.scene.scale(0.4,0.4,0.5)
         this.scene.rotate(-Math.PI/2,1,0,0);
+        this.scene.rotate(-this.wingRotateAngle,1,0,0);
         this.rightWingParallelogram.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();//Asa esquerda triangulo
         this.scene.translate(0.4,0,1.3)
+        //this.scene.translate(0,this.wingTranslate,0);
         this.scene.scale(0.4,0.4,0.5)
         this.scene.rotate(Math.PI/2,1,0,0);
         this.scene.rotate(Math.PI/2,0,0,1);
+        //this.scene.rotate(this.wingRotateAngle,0,1,0);
         this.leftWingTriangle.display();
         this.scene.popMatrix();
 
