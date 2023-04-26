@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyUnitCube } from "./MyUnitCube.js";
+import { MyAnimatedObject } from "./MyAnimatedObject.js";
 
 /**
  * MyScene
@@ -32,11 +33,6 @@ export class MyScene extends CGFscene {
     this.bird = new MyBird(this);
     this.unitCube = new MyUnitCube(this);
 
-    this.birdOscilationShader = new CGFshader(this.gl, "shaders/birdoOcillationAnim.vert", "shaders/birdoOcillationAnim.frag")
-
-    this.birdOscilationShader.setUniformsValues({ uSampler2: 1 });
-    this.birdOscilationShader.setUniformsValues({ timeFactor: 0 });
-
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -59,6 +55,12 @@ export class MyScene extends CGFscene {
     this.setUpdatePeriod(50);
 
     this.appStartTime = Date.now();
+
+    this.startVal = 0;
+    this.endVal = 1;
+    this.animStartTimeSecs = 1;
+    this.animDurationSecs = 1;
+    this.length = (this.endVal-this.startVal);
   }
 
   initLights() {
@@ -69,7 +71,7 @@ export class MyScene extends CGFscene {
   }
 
   initCameras() {
-    this.camera = new CGFcamera(
+      this.camera = new CGFcamera(
       1.0,
       0.1,
       1000,
@@ -105,9 +107,12 @@ export class MyScene extends CGFscene {
 
   update(t) {
 
-    this.birdOscilationShader.setUniformsValues({ timeFactor: t / 100 % 100 });
-    console.log("updating");
-    
+    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
+    var elapsedTimeSecs = timeSinceAppStart - this.animStartTimeSecs;
+    if (elapsedTimeSecs >= 0) 
+      this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI) * (elapsedTimeSecs/this.animDurationSecs)) * this.length;
+
+    this.checkKeys();
 	}
 
   display() {
@@ -129,15 +134,14 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    
+    this.pushMatrix();
+    this.translate(0,this.animVal,0);
+    this.bird.display();
+    this.popMatrix();
+
+    this.appearance.apply();
 
     this.pushMatrix();
-
-		this.setActiveShader(this.birdOscilationShader);
-
-    this.bird.display();
-    this.setActiveShader(this.defaultShader);
-    this.appearance.apply();
     this.translate(0,-3,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
@@ -146,7 +150,6 @@ export class MyScene extends CGFscene {
 
     this.panorama.display();
 
-    
     // ---- END Primitive drawing section
   }
 }

@@ -48,6 +48,6 @@ export class MyInterface extends CGFinterface {
 
     isKeyPressed(keyCode) {
 
-        return this.activeKeys[KeyCode] || false;
+        return this.activeKeys[keyCode] || false;
     } 
 }
