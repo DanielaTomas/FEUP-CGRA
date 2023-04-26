@@ -108,9 +108,7 @@ export class MyScene extends CGFscene {
   update(t) {
 
     var timeSinceAppStart = (t-this.appStartTime)/1000.0;
-    var elapsedTimeSecs = timeSinceAppStart - this.animStartTimeSecs;
-    if (elapsedTimeSecs >= 0) 
-      this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI) * (elapsedTimeSecs/this.animDurationSecs)) * this.length;
+    this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
 
     this.checkKeys();
 	}
