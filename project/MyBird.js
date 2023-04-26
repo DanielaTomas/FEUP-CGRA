@@ -2,15 +2,14 @@ import {CGFobject, CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MySphere } from "./MySphere.js";
 import { MyCone } from "./MyCone.js";
 import { MyUnitCube } from "./MyUnitCube.js";
-import { MyParallelogram } from './MyParallelogram.js';
-import { MyTriangleWings } from './MyTriangleWings.js';
+import { MyWing } from './MyWing.js';
 import { MyTriangleTail } from './MyTriangleTail.js';
 
 
 /**
  * MyBird
  * @constructor
- * @param CGFtexture
+ * @param scene - Reference to MyScene object
  */
 export class MyBird extends CGFobject {//Gaspar
 	constructor(scene) {
@@ -21,17 +20,14 @@ export class MyBird extends CGFobject {//Gaspar
         this.beakCone = new MyCone(this.scene,10,3);
         this.leftEyeCube = new MyUnitCube(this.scene);
         this.rightEyeCube = new MyUnitCube(this.scene);
-        this.leftWingParallelogram = new MyParallelogram(this.scene);
-        this.rightWingParallelogram = new MyParallelogram(this.scene);
-        this.leftWingTriangle = new MyTriangleWings(this.scene);
-        this.rightWingTriangle = new MyTriangleWings(this.scene);
+        this.leftWing = new MyWing(this.scene);
+        this.rightWing = new MyWing(this.scene);
         this.tailTriangle = new MyTriangleTail(this.scene);
 
         this.scene.enableTextures(true);
         this.birdTexture = new CGFtexture(this.scene, "images/textura_do_gaspar.jpg");
 
-        this.wingRotateAngle = 0;
-        this.wingTranslate = 0;
+        this.rotateAngle = 0;
 
         this.initMaterials(this.scene);
         this.initBuffers();
@@ -83,38 +79,15 @@ export class MyBird extends CGFobject {//Gaspar
         this.headSphere.display();
         this.scene.popMatrix();
 
-        this.scene.pushMatrix();//Asa esquerda paralelogramo
-        this.scene.translate(-0.4,0,0.3)
-        this.scene.scale(0.4,0.4,0.5)
-        this.scene.rotate(Math.PI/2,1,0,0);
-        this.scene.rotate(this.wingRotateAngle,1,0,0);
-        this.leftWingParallelogram.display();
+        this.scene.pushMatrix();
+        this.scene.rotate(this.rotateAngle,1,0,0);
+        this.leftWing.display();
         this.scene.popMatrix();
 
-        this.scene.pushMatrix();//Asa direita paralelogramo
-        this.scene.translate(-0.4,0,-0.3)
-        this.scene.scale(0.4,0.4,0.5)
-        this.scene.rotate(-Math.PI/2,1,0,0);
-        this.scene.rotate(-this.wingRotateAngle,1,0,0);
-        this.rightWingParallelogram.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();//Asa esquerda triangulo
-        this.scene.translate(0.4,0,1.3)
-        //this.scene.translate(0,this.wingTranslate,0);
-        this.scene.scale(0.4,0.4,0.5)
-        this.scene.rotate(Math.PI/2,1,0,0);
-        this.scene.rotate(Math.PI/2,0,0,1);
-        //this.scene.rotate(this.wingRotateAngle,0,1,0);
-        this.leftWingTriangle.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();//Asa direita triangulo
-        this.scene.translate(0.4,0,-1.3)
-        this.scene.scale(0.4,0.4,0.5)
-        this.scene.rotate(-Math.PI/2,1,0,0);
-        this.scene.rotate(Math.PI/2,0,0,1);
-        this.rightWingTriangle.display();
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI,1,0,0);
+        this.scene.rotate(-this.rotateAngle,1,0,0);
+        this.rightWing.display();
         this.scene.popMatrix();
 
         this.tailAppearance.apply();
@@ -124,6 +97,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.scale(0.3,0.3,0.3)
         this.scene.rotate(Math.PI/2,1,0,0);
         this.scene.rotate(Math.PI,0,0,1);
+        this.scene.rotate(this.rotateAngle,0,1,0);
         this.tailTriangle.display();
         this.scene.popMatrix();
 

@@ -108,9 +108,7 @@ export class MyScene extends CGFscene {
 
     var timeSinceAppStart = (t-this.appStartTime)/1000.0;
     this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
-    this.startVal + 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart) * this.length;
-    this.bird.wingRotateAngle = Math.PI / 4 * Math.sin((2*Math.PI) * timeSinceAppStart);
-    //this.bird.wingTranslate = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
+    this.bird.rotateAngle = this.startVal + Math.PI / 5 * Math.sin((2*Math.PI) * timeSinceAppStart) * this.length;
     //amplitude * Math.sin(2 * Math.PI * frequency * x);
     this.checkKeys();
 	}
