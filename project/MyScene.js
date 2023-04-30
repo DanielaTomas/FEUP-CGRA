@@ -1,5 +1,5 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
+import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyUnitCube } from "./MyUnitCube.js";
@@ -28,7 +28,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
+    this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
     this.unitCube = new MyUnitCube(this);
 
@@ -41,15 +41,6 @@ export class MyScene extends CGFscene {
     this.panoramaTexture = new CGFtexture(this, "images/panorama_do_gaspar.jpg");
 
     this.panorama = new MyPanorama(this, this.panoramaTexture)
-
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
-
-    this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.appearance.setAmbient(10.0, 10.0, 10.0, 1.0);
-    this.appearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
-    this.appearance.setSpecular(0.8, 0.8, 0.8, 1.0);
 
     this.setUpdatePeriod(50);
 
@@ -137,16 +128,16 @@ export class MyScene extends CGFscene {
     this.bird.display();
     this.popMatrix();
 
-    this.appearance.apply();
+    //this.appearance.apply();
 
     this.pushMatrix();
     this.translate(0,-3,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
+    this.terrain.display();
     this.popMatrix();
 
-    this.panorama.display();
+    //this.panorama.display();
 
     // ---- END Primitive drawing section
   }
