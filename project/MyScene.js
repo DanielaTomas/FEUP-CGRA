@@ -137,7 +137,7 @@ export class MyScene extends CGFscene {
     this.terrain.display();
     this.popMatrix();
 
-    //this.panorama.display();
+    this.panorama.display();
 
     // ---- END Primitive drawing section
   }

@@ -10,40 +10,40 @@ export class MyTerrain extends CGFobject {
 	constructor(scene) {
 		super(scene);
 
-        this.plane = new MyPlane(scene,30);
+        this.plane = new MyPlane(this.scene,30);
 
+        this.terrainShader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
+        this.terrainShader.setUniformsValues({normScale: 1});
+        this.terrainShader.setUniformsValues({uSampler2: 1});
+        this.terrainShader.setUniformsValues({uSampler3: 2});
+
+        this.heightTex = new CGFtexture(this.scene, 'images/heightmap_editado.jpg');
+        this.altimetryTex = new CGFtexture(this.scene, 'images/altimetry.png');
+        
         this.initMaterials(this.scene);
-        this.initShaders(this.scene);
         this.initBuffers();
 	}
 
     initMaterials(scene){
-        this.texture = new CGFtexture(scene, "images/terrain.jpg");
 
-        this.appearance = new CGFappearance(scene);
-        this.appearance.setTexture(this.texture);
+        this.terrainTex = new CGFtexture(this.scene, 'images/terrain.jpg');
+
+        this.appearance = new CGFappearance(this.scene);
+        this.appearance.setTexture(this.terrainTex);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
         this.appearance.setAmbient(10.0, 10.0, 10.0, 1.0);
         this.appearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
         this.appearance.setSpecular(0.8, 0.8, 0.8, 1.0);
     }
 
-    initShaders(scene){
-        this.shader = new CGFshader(scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
-        this.shader.setUniformsValues({uSampler1: 2,uSampler2: 3});
-
-        this.terrainTex = new CGFtexture(scene, 'images/terrain.jpg');
-        this.heightTex = new CGFtexture(scene, 'images/heightmap.jpg');
-    }
-
     display() {
 
-        this.scene.setActiveShader(this.shader);
+        this.scene.setActiveShader(this.terrainShader);
 
-        //this.appearance.apply();
+        this.appearance.apply();
 
-        this.terrainTex.bind(1);
-        this.heightTex.bind(2);
+        this.heightTex.bind(1);
+		this.altimetryTex.bind(2);
 
         this.plane.display();
 
