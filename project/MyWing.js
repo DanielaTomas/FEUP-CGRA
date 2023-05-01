@@ -1,18 +1,18 @@
 import {CGFobject} from '../lib/CGF.js';
 import { MyParallelogram } from './MyParallelogram.js';
-import { MyTriangleWings } from './MyTriangleWings.js';
+import { MyTriangleWingTip } from './MyTriangleWingTip.js';
 
 /**
  * MyWing
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MyWing extends CGFobject {//Gaspar
+export class MyWing extends CGFobject {
 	constructor(scene) {
 		super(scene);
 
         this.wingParallelogram = new MyParallelogram(this.scene);
-        this.wingTriangle = new MyTriangleWings(this.scene);
+        this.wingTriangle = new MyTriangleWingTip(this.scene);
 
         this.initBuffers();
 

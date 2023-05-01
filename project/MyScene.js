@@ -35,6 +35,7 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.speedFactor = 0.1
 
     this.enableTextures(true);
 
@@ -54,12 +55,8 @@ export class MyScene extends CGFscene {
     this.setUpdatePeriod(50);
 
     this.appStartTime = Date.now();
+
     this.animVal = 0;
-    this.startVal = 0;
-    this.endVal = 1;
-    this.animStartTimeSecs = 1;
-    this.animDurationSecs = 1;
-    this.length = (this.endVal-this.startVal);
   }
 
   initLights() {
@@ -105,12 +102,9 @@ export class MyScene extends CGFscene {
   }
 
   update(t) {
-
-    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
-    this.animVal = this.startVal + 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart)) * this.length;
-    this.bird.rotateAngle = this.startVal + Math.PI / 5 * Math.sin((2*Math.PI) * timeSinceAppStart) * this.length;
-    //amplitude * Math.sin(2 * Math.PI * frequency * x);
     this.checkKeys();
+    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
+    this.bird.update(timeSinceAppStart,this.scaleFactor,this.speedFactor);
 	}
 
   display() {
@@ -131,11 +125,8 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
-    this.pushMatrix();
-    this.translate(0,this.animVal,0);
+    
     this.bird.display();
-    this.popMatrix();
 
     this.appearance.apply();
 

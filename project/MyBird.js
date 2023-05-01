@@ -15,7 +15,15 @@ export class MyBird extends CGFobject {//Gaspar
 	constructor(scene) {
 		super(scene);
 
-        this.bodySphere = new MySphere(this.scene,10,15,false,6);
+        this.orientation = 0;
+        this.speed = 0;
+        this.scale = 1;
+        this.position = [];
+        this.position.x = 0;
+        this.position.y = 0;
+        this.position.z = 0;
+
+        this.bodySphere = new MySphere(this.scene,10,15,false,6);;
         this.headSphere = new MySphere(this.scene,10,15,false,4);
         this.beakCone = new MyCone(this.scene,10,3);
         this.leftEyeCube = new MyUnitCube(this.scene);
@@ -27,6 +35,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.enableTextures(true);
         this.birdTexture = new CGFtexture(this.scene, "images/textura_do_gaspar.jpg");
 
+        this.animVal = 0;
         this.rotateAngle = 0;
 
         this.initMaterials(this.scene);
@@ -36,19 +45,19 @@ export class MyBird extends CGFobject {//Gaspar
 
     initMaterials(scene) {
 
-        this.birdAppearance = new CGFappearance(this.scene);
+        this.birdAppearance = new CGFappearance(scene);
         this.birdAppearance.setTexture(this.birdTexture);
         this.birdAppearance.setTextureWrap('REPEAT', 'REPEAT');
         this.birdAppearance.setAmbient(10.0, 10.0, 10.0, 1.0);
         this.birdAppearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
         this.birdAppearance.setSpecular(0.8, 0.8, 0.8, 1.0);
 
-        this.tailAppearance = new CGFappearance(this.scene);
+        this.tailAppearance = new CGFappearance(scene);
         this.tailAppearance.setTexture(this.birdTexture);
         this.tailAppearance.setTextureWrap('REPEAT', 'REPEAT');
         this.tailAppearance.setAmbient(4.0, 0, 0, 1.0);
-        this.tailAppearance.setDiffuse(0.8, 0.8, 0.8, 1.0);
-        this.tailAppearance.setSpecular(0.8, 0.8, 0.8, 1.0);
+        this.tailAppearance.setDiffuse(0, 0, 0, 1.0);
+        this.tailAppearance.setSpecular(0.8, 0, 0, 1.0);
 
         this.beakMaterial = new CGFappearance(scene);
         this.beakMaterial.setAmbient(4, 4, 0, 1.0);
@@ -63,11 +72,75 @@ export class MyBird extends CGFobject {//Gaspar
         this.eyesMaterial.setShininess(10.0);
 
     }
+    turn(v) {
+        this.orientation = this.orientation + v;
+    }
+    accelerate(v) {
+        this.speed = this.speed + 0.1 * v;
+    }
+    
+    update(timeSinceAppStart,scaleFactor,speedFactor) {
+        //startval = 0, endval = 1, length = (this.endVal-this.startVal) = 1
+        //amplitude * Math.sin(2 * Math.PI * frequency * x);
+        this.scale = scaleFactor
 
+        if(this.speed >= 0) {
+            this.position.x = this.position.x - Math.cos(this.orientation) * this.speed;
+            //this.position.y = ;
+            this.position.z = this.position.z + Math.sin(this.orientation) * this.speed;
+        }
+        
+        //this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart);
+        //this.animVal = 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart));
+        
+        //TODO:
+        if(this.speed === 0) {
+            this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * speedFactor);
+            this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * speedFactor);
+        }
+        else {
+            this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
+            this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
+        }
+
+        if (this.scene.gui.isKeyPressed("KeyR")) {
+            this.orientation = 0;
+            this.speed = 0;
+            this.scale = 1;
+            this.position.x = 0;
+            this.position.y = 0;
+            this.position.z = 0;
+            this.rotateAngle = 0;
+            this.animVal = 0;
+        }
+        else {
+            if (this.scene.gui.isKeyPressed("KeyW")) {
+                this.accelerate(speedFactor);
+                //this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
+                //this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
+            }
+            if (this.scene.gui.isKeyPressed("KeyS")) {
+                this.accelerate(-speedFactor);
+            }
+            if (this.scene.gui.isKeyPressed("KeyA")) {
+                this.turn(speedFactor)
+            }
+            if (this.scene.gui.isKeyPressed("KeyD")) {
+                this.turn(-speedFactor)
+            }
+        }
+    }
     display(){
 
         this.birdAppearance.apply();
-        
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(0,this.animVal,0);
+        this.scene.translate(this.position.x,this.position.y,this.position.z);
+        this.scene.rotate(this.orientation,0,1,0);
+        this.scene.scale(this.scale,this.scale,this.scale);
+
         this.scene.pushMatrix();//Corpo
         this.scene.scale(1,0.35,0.35)//elipse
         this.bodySphere.display();
@@ -79,12 +152,12 @@ export class MyBird extends CGFobject {//Gaspar
         this.headSphere.display();
         this.scene.popMatrix();
 
-        this.scene.pushMatrix();
+        this.scene.pushMatrix();//Asa esquerda
         this.scene.rotate(this.rotateAngle,1,0,0);
         this.leftWing.display();
         this.scene.popMatrix();
 
-        this.scene.pushMatrix();
+        this.scene.pushMatrix();//Asa direita
         this.scene.rotate(Math.PI,1,0,0);
         this.scene.rotate(-this.rotateAngle,1,0,0);
         this.rightWing.display();
@@ -126,6 +199,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.rightEyeCube.display();
         this.scene.popMatrix();
 
+        this.scene.popMatrix();
     }
 
 }
