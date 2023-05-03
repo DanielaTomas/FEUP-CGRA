@@ -22,6 +22,7 @@ export class MyBird extends CGFobject {//Gaspar
         this.position.x = 0;
         this.position.y = 0;
         this.position.z = 0;
+        this.maxSpeed = 3;
 
         this.bodySphere = new MySphere(this.scene,10,15,false,6);;
         this.headSphere = new MySphere(this.scene,10,15,false,4);
@@ -37,7 +38,8 @@ export class MyBird extends CGFobject {//Gaspar
 
         this.animVal = 0;
         this.rotateAngle = 0;
-
+        this.animAng = 0;
+        
         this.initMaterials(this.scene);
         this.initBuffers();
 
@@ -73,35 +75,23 @@ export class MyBird extends CGFobject {//Gaspar
 
     }
     turn(v) {
-        this.orientation = this.orientation + v;
+        this.orientation = this.orientation + 0.1*v;
     }
     accelerate(v) {
-        this.speed = this.speed + 0.1 * v;
+        this.speed = this.speed + 0.01 * v;
     }
     
-    update(timeSinceAppStart,scaleFactor,speedFactor) {
-        //startval = 0, endval = 1, length = (this.endVal-this.startVal) = 1
-        //amplitude * Math.sin(2 * Math.PI * frequency * x);
-        this.scale = scaleFactor
+    update(scaleFactor,speedFactor) {
+        
+        this.scale = scaleFactor;
 
-        if(this.speed >= 0) {
-            this.position.x = this.position.x - Math.cos(this.orientation) * this.speed;
-            //this.position.y = ;
-            this.position.z = this.position.z + Math.sin(this.orientation) * this.speed;
-        }
+        this.position.x = this.position.x - Math.cos(this.orientation) * this.speed;
+        this.position.z = this.position.z + Math.sin(this.orientation) * this.speed;
         
-        //this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart);
-        //this.animVal = 0.2 * Math.sin((2*Math.PI)*(timeSinceAppStart));
-        
-        //TODO:
-        if(this.speed === 0) {
-            this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * speedFactor);
-            this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * speedFactor);
-        }
-        else {
-            this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
-            this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
-        }
+        this.animAng = this.animAng + this.speed + 0.3*speedFactor;
+        this.rotateAngle = Math.PI / 6 * Math.sin(this.animAng);
+        this.animVal = 0.2 * Math.sin(this.animAng);
+        //amplitude * Math.sin(2 * Math.PI * frequency * x);
 
         if (this.scene.gui.isKeyPressed("KeyR")) {
             this.orientation = 0;
@@ -112,24 +102,26 @@ export class MyBird extends CGFobject {//Gaspar
             this.position.z = 0;
             this.rotateAngle = 0;
             this.animVal = 0;
+            this.animAng = 0;
         }
         else {
             if (this.scene.gui.isKeyPressed("KeyW")) {
-                this.accelerate(speedFactor);
-                //this.rotateAngle = Math.PI / 6 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
-                //this.animVal = 0.2 * Math.sin((2*Math.PI) * timeSinceAppStart * this.speed);
+                this.accelerate(speedFactor); 
+                if(this.speed > this.maxSpeed) this.speed = this.maxSpeed;
             }
             if (this.scene.gui.isKeyPressed("KeyS")) {
                 this.accelerate(-speedFactor);
+                if(this.speed < 0) this.speed = 0;
             }
             if (this.scene.gui.isKeyPressed("KeyA")) {
-                this.turn(speedFactor)
+                this.turn(speedFactor);
             }
             if (this.scene.gui.isKeyPressed("KeyD")) {
-                this.turn(-speedFactor)
+                this.turn(-speedFactor);
             }
         }
     }
+
     display(){
 
         this.birdAppearance.apply();

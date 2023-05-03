@@ -35,7 +35,7 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
-    this.speedFactor = 0.1
+    this.speedFactor = 1;
 
     this.enableTextures(true);
 
@@ -54,9 +54,6 @@ export class MyScene extends CGFscene {
 
     this.setUpdatePeriod(50);
 
-    this.appStartTime = Date.now();
-
-    this.animVal = 0;
   }
 
   initLights() {
@@ -103,8 +100,7 @@ export class MyScene extends CGFscene {
 
   update(t) {
     this.checkKeys();
-    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
-    this.bird.update(timeSinceAppStart,this.scaleFactor,this.speedFactor);
+    this.bird.update(this.scaleFactor,this.speedFactor);
 	}
 
   display() {
