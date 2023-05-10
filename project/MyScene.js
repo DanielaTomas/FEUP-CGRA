@@ -3,6 +3,8 @@ import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyUnitCube } from "./MyUnitCube.js";
+import { MyNest } from "./MyNest.js";
+import { MyBirdEgg } from "./MyBirdEgg.js";
 
 /**
  * MyScene
@@ -31,6 +33,8 @@ export class MyScene extends CGFscene {
     this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
     this.unitCube = new MyUnitCube(this);
+    this.nest = new MyNest(this);
+    this.egg = new MyBirdEgg(this,30,30,1);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -44,6 +48,8 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.panoramaTexture)
 
     this.setUpdatePeriod(50);
+
+    this.appStartTime = Date.now();
 
   }
 
@@ -60,6 +66,7 @@ export class MyScene extends CGFscene {
       0.1,
       1000,
       vec3.fromValues(10, 10, 5),
+      //vec3.fromValues(0, -10, 0),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -91,7 +98,8 @@ export class MyScene extends CGFscene {
 
   update(t) {
     this.checkKeys();
-    this.bird.update(this.scaleFactor,this.speedFactor);
+    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
+    this.bird.update(timeSinceAppStart,this.scaleFactor,this.speedFactor);
 	}
 
   display() {
@@ -113,12 +121,14 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     
-    this.bird.display();
-
+    //this.bird.display();
+    this.nest.display();
+    //this.egg.eggMaterial.apply();
+    //this.egg.display();
     //this.appearance.apply();
 
     this.pushMatrix();
-    this.translate(0,-40,0);
+    this.translate(0,-115,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.terrain.display();
