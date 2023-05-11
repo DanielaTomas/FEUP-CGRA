@@ -24,7 +24,7 @@ export class MyCircumference extends CGFobject {
       var y = 0;
       var z = Math.sin(alpha);
       this.vertices.push(x, y, z);
-      this.texCoords.push(slice / this.sliceCount, 0);
+      this.texCoords.push((x + 1) / 2, (z + 1) / 2);
 
       if (slice < this.sliceCount) {
         var current = slice;

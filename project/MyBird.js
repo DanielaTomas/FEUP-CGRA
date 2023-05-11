@@ -39,7 +39,11 @@ export class MyBird extends CGFobject {//Gaspar
         this.animVal = 0;
         this.rotateAngle = 0;
         this.animAng = 0;
-        
+
+        this.isCatching = false;
+        this.animDuration = 2;
+        this.pickedUpEgg = null;//referencia ao ovo apanhado
+
         this.initMaterials(this.scene);
         this.initBuffers();
 
@@ -80,8 +84,25 @@ export class MyBird extends CGFobject {//Gaspar
     accelerate(v) {
         this.speed = this.speed + 0.01 * v;
     }
-    
-    update(scaleFactor,speedFactor) {
+
+    catchEgg(time){
+
+        if (time <= this.animDuration) {
+            if (time <= this.animDuration-1) { // Descend movement // this.animDuration/2 ???
+                console.log("descendo")
+                this.position.y = this.position.y - 2;
+            } 
+            else { // Ascend movement
+                console.log("subindo")
+                this.position.y = this.position.y + 2; 
+            }
+        }
+        else {
+            this.isCatching = false;
+        }
+    }
+
+    update(timeSinceAppStart,scaleFactor,speedFactor) {
         
         this.scale = scaleFactor;
 
@@ -91,7 +112,12 @@ export class MyBird extends CGFobject {//Gaspar
         this.animAng = this.animAng + this.speed + 0.3*speedFactor;
         this.rotateAngle = Math.PI / 6 * Math.sin(this.animAng);
         this.animVal = 0.2 * Math.sin(this.animAng);
+
         //amplitude * Math.sin(2 * Math.PI * frequency * x);
+
+        if(this.isCatching){
+            this.catchEgg(timeSinceAppStart);
+        }
 
         if (this.scene.gui.isKeyPressed("KeyR")) {
             this.orientation = 0;
@@ -119,12 +145,18 @@ export class MyBird extends CGFobject {//Gaspar
             if (this.scene.gui.isKeyPressed("KeyD")) {
                 this.turn(-speedFactor);
             }
+            if (this.scene.gui.isKeyPressed("KeyP")) {
+                this.isCatching = true;
+                this.animDuration = timeSinceAppStart+2;
+            }
         }
     }
 
     display(){
 
         this.birdAppearance.apply();
+
+        //this.pickedUpEgg.display();
 
         this.scene.pushMatrix();
 
