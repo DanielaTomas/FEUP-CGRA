@@ -36,6 +36,25 @@ export class MyScene extends CGFscene {
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
 
+    this.eggs = [
+			new MyBirdEgg(this,30,30,1),
+      new MyBirdEgg(this,30,30,1),
+      new MyBirdEgg(this,30,30,1),
+      new MyBirdEgg(this,30,30,1),
+		];
+
+    this.eggXposition = [];
+    this.eggZposition = [];
+
+
+
+    for (var i = 0; i < this.eggs.length; i++){
+      this.eggXposition[i] = Math.random() * (20 - (-20)) + (-20);
+      this.eggZposition[i] = Math.random() * (80 - (-30)) + (-30);
+    }
+
+    
+
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -121,9 +140,24 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     
-    //this.bird.display();
+    this.bird.display();
+
+    this.pushMatrix()
+    this.translate(80,-71,0);
     this.nest.display();
-    //this.egg.eggMaterial.apply();
+    this.popMatrix();
+
+
+    this.egg.eggMaterial.apply();
+    this.pushMatrix();
+    this.translate(80,-71,0);
+    for ( var i = 0; i < this.eggs.length; i++){
+      this.pushMatrix();
+      this.translate(this.eggXposition[i],0,this.eggZposition[i]);
+      this.eggs[i].display();
+      this.popMatrix();
+    }
+    this.popMatrix();
     //this.egg.display();
     //this.appearance.apply();
 
