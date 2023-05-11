@@ -7,6 +7,7 @@ import {CGFobject} from '../lib/CGF.js';
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
  * @param drawInsideOut - draw sphere so its only visible from the inside
+ * @param texMult - makes texture be drawn more times
  */
 export class MySphere extends CGFobject {
 	constructor(scene, slices, stacks, drawInsideOut, texMult) {
