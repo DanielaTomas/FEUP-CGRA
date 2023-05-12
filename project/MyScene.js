@@ -5,6 +5,8 @@ import { MyBird } from "./MyBird.js";
 import { MyUnitCube } from "./MyUnitCube.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
+import { MyBillboard } from "./MyBillboard.js";
+
 
 /**
  * MyScene
@@ -35,6 +37,8 @@ export class MyScene extends CGFscene {
     this.unitCube = new MyUnitCube(this);
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
+    this.tree = new MyBillboard(this,0,0,0);
+
 
     this.eggs = [
 			new MyBirdEgg(this,30,30,1),
@@ -42,6 +46,8 @@ export class MyScene extends CGFscene {
       new MyBirdEgg(this,30,30,1),
       new MyBirdEgg(this,30,30,1),
 		];
+
+    
 
     this.eggXposition = [];
     this.eggZposition = [];
@@ -131,18 +137,22 @@ export class MyScene extends CGFscene {
 
     //Atualizar todas as luzes 
     this.lights[0].update();
+    //console.log("camera position x: " + this.camera.position[0] + " y:" + this.camera.position[1] + " z:" +this.camera.position[2])
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    
-    this.bird.display();
+
+    this.tree.display();
+    //this.bird.display();
 
     this.pushMatrix()
     this.translate(80,-71,0);
     this.nest.display();
     this.popMatrix();
+    
+    
 
 
     this.egg.eggMaterial.apply();

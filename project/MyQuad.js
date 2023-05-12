@@ -8,6 +8,7 @@ import {CGFobject} from '../lib/CGF.js';
 export class MyQuad extends CGFobject {
 	constructor(scene, coords) {
 		super(scene);
+		this.faceNormal = vec3.create();
 		this.initBuffers();
 		if (coords != undefined)
 			this.updateTexCoords(coords);
@@ -29,10 +30,10 @@ export class MyQuad extends CGFobject {
 
 		//Facing Z positive
 		this.normals = [
-			1, 0, 1,
-			1, 0, 1,
-			1, 0, 1,
-			1, 0, 1
+			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
+			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
+			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
+			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
 		];
 		
 		/*
@@ -50,9 +51,12 @@ export class MyQuad extends CGFobject {
 			1, 1,
 			0, 0,
 			1, 0
-		]
+		];
+
 		this.primitiveType = this.scene.gl.TRIANGLES;
+
 		this.initGLBuffers();
+		this.enableNormalViz();
 	}
 
 	/**
@@ -63,6 +67,30 @@ export class MyQuad extends CGFobject {
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
+	}
+
+	updateNormals(coords) {
+		//this.normals = [...coords, ...coords, ...coords, ...coords];
+		//console.log(coords);
+
+		// Calculate the face normal of the quad
+		this.faceNormal = coords;
+		vec3.cross(this.faceNormal, vec3.sub(vec3.create(), this.vertices.slice(0, 3), this.vertices.slice(3, 6)), vec3.sub(vec3.create(), this.vertices.slice(6, 9), this.vertices.slice(3, 6)));
+		vec3.normalize(this.faceNormal, this.faceNormal);
+
+		// Update the normals array for each vertex of the quad
+		this.normals = [
+			// Vertex 0 normal
+			this.faceNormal[0], this.faceNormal[1], this.faceNormal[2],
+			// Vertex 1 normal
+			this.faceNormal[0], this.faceNormal[1], this.faceNormal[2],
+			// Vertex 2 normal
+			this.faceNormal[0], this.faceNormal[1], this.faceNormal[2],
+			// Vertex 3 normal
+			this.faceNormal[0], this.faceNormal[1], this.faceNormal[2]
+		];
+
+		this.initNormalVizBuffers();
 	}
 }
 
