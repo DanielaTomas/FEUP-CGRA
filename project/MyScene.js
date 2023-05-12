@@ -68,8 +68,6 @@ export class MyScene extends CGFscene {
 
     this.setUpdatePeriod(50);
 
-    this.appStartTime = Date.now();
-
   }
 
   initLights() {
@@ -117,8 +115,7 @@ export class MyScene extends CGFscene {
 
   update(t) {
     this.checkKeys();
-    var timeSinceAppStart = (t-this.appStartTime)/1000.0;
-    this.bird.update(timeSinceAppStart,this.scaleFactor,this.speedFactor);
+    this.bird.update(this.scaleFactor,this.speedFactor);
 	}
 
   display() {

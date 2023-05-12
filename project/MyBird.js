@@ -40,6 +40,8 @@ export class MyBird extends CGFobject {//Gaspar
         this.rotateAngle = 0;
         this.animAng = 0;
 
+        this.startTime = 0;
+        this.initY = 0;
         this.isCatching = false;
         this.animDuration = 2;
         this.pickedUpEgg = null;//referencia ao ovo apanhado
@@ -84,25 +86,37 @@ export class MyBird extends CGFobject {//Gaspar
     accelerate(v) {
         this.speed = this.speed + 0.01 * v;
     }
+    catchEgg(groundHeight, originalAltitude) {
+        const duration = 2000;
+        const distance = originalAltitude - groundHeight;
+        const halfDuration = duration / 2;
+        const velocity = distance / halfDuration;
+        let elapsedTime = 0;
 
-    catchEgg(time){
-
-        if (time <= this.animDuration) {
-            if (time <= this.animDuration-1) { // Descend movement // this.animDuration/2 ???
-                console.log("descendo")
-                this.position.y = this.position.y - 2;
-            } 
-            else { // Ascend movement
-                console.log("subindo")
-                this.position.y = this.position.y + 2; 
+        const interval = setInterval(() => {
+          elapsedTime = Date.now() - this.startTime;
+      
+          if (elapsedTime < halfDuration) {
+            //console.log("descending")
+            this.position.y = originalAltitude - velocity * elapsedTime;
+          } 
+          else if (elapsedTime < duration) {
+            //console.log("ascending")
+            this.position.y = groundHeight + velocity * (elapsedTime - halfDuration);
+      
+            if (this.position.y > originalAltitude) {
+              this.position.y = originalAltitude;
             }
-        }
-        else {
+          } 
+          else {
+            this.position.y = originalAltitude;
             this.isCatching = false;
-        }
+            clearInterval(interval);
+          }
+        }, 10);
     }
-
-    update(timeSinceAppStart,scaleFactor,speedFactor) {
+      
+    update(scaleFactor,speedFactor) {
         
         this.scale = scaleFactor;
 
@@ -116,7 +130,7 @@ export class MyBird extends CGFobject {//Gaspar
         //amplitude * Math.sin(2 * Math.PI * frequency * x);
 
         if(this.isCatching){
-            this.catchEgg(timeSinceAppStart);
+            this.catchEgg(-40,this.initY)
         }
 
         if (this.scene.gui.isKeyPressed("KeyR")) {
@@ -146,8 +160,11 @@ export class MyBird extends CGFobject {//Gaspar
                 this.turn(-speedFactor);
             }
             if (this.scene.gui.isKeyPressed("KeyP")) {
-                this.isCatching = true;
-                this.animDuration = timeSinceAppStart+2;
+                if(!this.isCatching) {
+                    this.isCatching = true;
+                    this.startTime = Date.now();
+                    this.initY = this.position.y;
+                }
             }
         }
     }
