@@ -2,7 +2,6 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
-import { MyUnitCube } from "./MyUnitCube.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 
@@ -32,7 +31,6 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
-    this.unitCube = new MyUnitCube(this);
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
 
@@ -46,14 +44,10 @@ export class MyScene extends CGFscene {
     this.eggXposition = [];
     this.eggZposition = [];
 
-
-
     for (var i = 0; i < this.eggs.length; i++){
-      this.eggXposition[i] = Math.random() * (20 - (-20)) + (-20);
-      this.eggZposition[i] = Math.random() * (80 - (-30)) + (-30);
+      this.eggXposition[i] = Math.random() * (60 - (-60)) + (-60);
+      this.eggZposition[i] = Math.random() * (120 - (-70)) + (-70);
     }
-
-    
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -148,14 +142,15 @@ export class MyScene extends CGFscene {
     this.egg.eggMaterial.apply();
     this.pushMatrix();
     this.translate(80,-71,0);
-    for ( var i = 0; i < this.eggs.length; i++){
+    this.scale(0.3,0.3,0.3);
+    for (var i = 0; i < this.eggs.length; i++){
       this.pushMatrix();
       this.translate(this.eggXposition[i],0,this.eggZposition[i]);
       this.eggs[i].display();
       this.popMatrix();
     }
     this.popMatrix();
-    //this.egg.display();
+
     //this.appearance.apply();
 
     this.pushMatrix();

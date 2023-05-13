@@ -17,7 +17,7 @@ export class MyNest extends CGFobject {
         this.quad = new MyQuad(this.scene);
 
         this.angles = [];
-
+        this.nestEggs = [];
         this.scene.enableTextures(true);
 
         this.initMaterials(this.scene);
@@ -75,7 +75,17 @@ export class MyNest extends CGFobject {
         }
         this.scene.popMatrix();
 
+        if(this.nestEggs.length !== 0) {
+            this.scene.egg.eggMaterial.apply();
+          
+            for (var i = 0; i < this.nestEggs.length; i++) {
+                this.scene.pushMatrix();
+                this.scene.translate(0,0.3,0);
+                //TODO colocar ovos espalhados no ninho this.scene.translate(i,0.3,i);
+                this.scene.scale(0.3,0.3,0.3);
+                this.nestEggs[i].display();
+                this.scene.popMatrix();
+            }
         }
-
-
+    }
 }
