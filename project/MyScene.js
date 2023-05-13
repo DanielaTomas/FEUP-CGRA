@@ -6,6 +6,8 @@ import { MyUnitCube } from "./MyUnitCube.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyBillboard } from "./MyBillboard.js";
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
+import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
 
 
 /**
@@ -38,7 +40,8 @@ export class MyScene extends CGFscene {
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
     this.tree = new MyBillboard(this,0,0,0);
-
+    this.treeGroupPatch = new MyTreeGroupPatch(this);
+    this.treeRowPatch = new MyTreeRowPatch(this);
 
     this.eggs = [
 			new MyBirdEgg(this,30,30,1),
@@ -146,6 +149,8 @@ export class MyScene extends CGFscene {
 
     this.tree.display();
     //this.bird.display();
+    //this.treeGroupPatch.display();
+    //this.treeRowPatch.display();
 
     this.pushMatrix()
     this.translate(80,-71,0);

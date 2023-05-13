@@ -16,7 +16,7 @@ export class MyBillboard extends CGFobject {
         this.y = y;
         this.z = z;
 
-        this.ownOrigin = vec3.fromValues(this.x, this.y, this.z);
+        this.ownOrigin = vec3.fromValues(this.x, 0, this.z);
         this.quad = new MyQuad(scene);
         this.normals = [...this.quad.normals];
 
@@ -57,12 +57,17 @@ export class MyBillboard extends CGFobject {
         vec3.subtract(this.quadToCamera, this.scene.camera.position, this.ownOrigin);
         vec3.normalize(this.quadToCameraNormalized, this.quadToCamera);
 
-        this.angle = Math.acos(vec3.dot(this.faceNormal , this.quadToCameraNormalized));
-        vec3.cross(this.axis, this.faceNormal , this.quadToCameraNormalized);
+        this.angle = Math.acos(vec3.dot( this.quadToCameraNormalized, this.faceNormal));
+        vec3.cross(this.axis, this.quadToCameraNormalized , this.faceNormal);
         vec3.normalize(this.axisNormalized, this.axis);
+        vec3.negate(this.axisNormalized, this.axisNormalized);
+
+        //console.log(this.axisNormalized)
 
         this.scene.pushMatrix();
-        this.scene.rotate(this.angle, this.axisNormalized[0], this.axisNormalized[1] , this.axisNormalized[2]);
+        this.scene.translate(this.x, this.y, this.z);
+        this.scene.rotate(this.angle, this.axisNormalized[0] , this.axisNormalized[1], this.axisNormalized[2]);
+        
         this.quad.display();
         this.scene.popMatrix();
 
