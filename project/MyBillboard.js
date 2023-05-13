@@ -28,21 +28,27 @@ export class MyBillboard extends CGFobject {
         this.axisNormalized = vec3.create();
         this.angle = 0;
 
-        
-        
+        this.treeTex = new CGFtexture(this.scene, 'images/billboardtree.png');
 
-        /*this.terrainShader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
-        this.terrainShader.setUniformsValues({normScale: 3});
-        this.terrainShader.setUniformsValues({uSampler2: 1});
-        this.terrainShader.setUniformsValues({uSampler3: 2});
+        this.material = new CGFappearance(scene);
+        this.material.setAmbient(1, 1, 1, 1);
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(0, 0, 0, 1);
+        this.material.setShininess(10);
+        this.material.setTexture(this.treeTex);
 
-        this.heightTex = new CGFtexture(this.scene, 'images/heightmap_editado.jpg');
-        this.altimetryTex = new CGFtexture(this.scene, 'images/altimetry.png');*/
-        
+
+        this.treeShader = new CGFshader(this.scene.gl, "shaders/tree.vert", "shaders/tree.frag");
+
+
         this.initBuffers();
 	}
 
     display() {
+
+        this.scene.setActiveShader(this.treeShader);
+
+        this.material.apply();
 
         vec3.normalize(this.cameraNormalized, this.scene.camera.position);
 
@@ -59,6 +65,8 @@ export class MyBillboard extends CGFobject {
         this.scene.rotate(this.angle, this.axisNormalized[0], this.axisNormalized[1] , this.axisNormalized[2]);
         this.quad.display();
         this.scene.popMatrix();
+
+        this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 
