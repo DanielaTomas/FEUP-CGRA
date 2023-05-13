@@ -147,9 +147,9 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.tree.display();
+    //this.tree.display();
     //this.bird.display();
-    //this.treeGroupPatch.display();
+    this.treeGroupPatch.display();
     //this.treeRowPatch.display();
 
     this.pushMatrix()

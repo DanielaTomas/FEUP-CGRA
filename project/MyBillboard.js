@@ -10,6 +10,11 @@ export class MyBillboard extends CGFobject {
 	constructor(scene,x,y,z) {
 		super(scene);
 
+        this.imagePaths = ['images/billboardtree1.png', 'images/billboardtree2.png', 'images/billboardtree3.png'];
+        this.randomIndex = Math.floor(Math.random() * this.imagePaths.length);
+
+
+
         this.quad = new MyQuad(this.scene);
 
         this.x = x;
@@ -28,7 +33,7 @@ export class MyBillboard extends CGFobject {
         this.axisNormalized = vec3.create();
         this.angle = 0;
 
-        this.treeTex = new CGFtexture(this.scene, 'images/billboardtree.png');
+        this.treeTex = new CGFtexture(this.scene, this.imagePaths[this.randomIndex]);
 
         this.material = new CGFappearance(scene);
         this.material.setAmbient(1, 1, 1, 1);
