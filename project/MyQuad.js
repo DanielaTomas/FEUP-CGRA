@@ -24,16 +24,16 @@ export class MyQuad extends CGFobject {
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			1,3,0,
-			2,3,1,
+			1,0,3,
+			2,1,3,
 		];
 
 		//Facing Z positive
 		this.normals = [
-			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
-			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
-			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
-			-0.668150007724762, 0.640247642993927, -0.37902313470840454,
+			1,0,1,
+			1,0,1,
+			1,0,1,
+			1,0,1,
 		];
 		
 		/*
@@ -91,6 +91,7 @@ export class MyQuad extends CGFobject {
 		];
 
 		this.initNormalVizBuffers();
+		return(this.faceNormal);
 	}
 }
 

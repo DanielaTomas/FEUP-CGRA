@@ -16,15 +16,17 @@ export class MyBillboard extends CGFobject {
         this.y = y;
         this.z = z;
 
-        this.axis = vec3.create();
-        this.axisNormalized = vec3.create();
-        this.cameraPosition = vec3.create();
+        this.ownOrigin = vec3.fromValues(this.x, this.y, this.z);
+        this.quad = new MyQuad(scene);
+        this.normals = [...this.quad.normals];
+
         this.cameraNormalized = vec3.create();
-        this.ownOrigin = vec3.fromValues(x,y,z);
-        this.ownOriginNormalized = vec3.create()
         this.quadToCamera = vec3.create();
         this.quadToCameraNormalized = vec3.create();
-        vec3.normalize(this.ownOriginNormalized, this.ownOrigin);
+        this.faceNormal = vec3.create();
+        this.axis = vec3.create();
+        this.axisNormalized = vec3.create();
+        this.angle = 0;
 
         
         
@@ -42,34 +44,21 @@ export class MyBillboard extends CGFobject {
 
     display() {
 
-        //this.scene.setActiveShader(this.terrainShader);
-
-        //this.appearance.apply();
-
-        //this.heightTex.bind(1);
-		//this.altimetryTex.bind(2);
-        
         vec3.normalize(this.cameraNormalized, this.scene.camera.position);
-        console.log(this.cameraNormalized);
-        this.quad.updateNormals(this.cameraNormalized);
 
+        this.faceNormal = this.quad.updateNormals(this.cameraNormalized);
 
         vec3.subtract(this.quadToCamera, this.scene.camera.position, this.ownOrigin);
         vec3.normalize(this.quadToCameraNormalized, this.quadToCamera);
 
-        this.angle = Math.acos(vec3.dot(this.cameraNormalized , this.quadToCameraNormalized));
-        //console.log(this.angle);
-        vec3.cross(this.axis, this.cameraNormalized , this.quadToCameraNormalized);
+        this.angle = Math.acos(vec3.dot(this.faceNormal , this.quadToCameraNormalized));
+        vec3.cross(this.axis, this.faceNormal , this.quadToCameraNormalized);
         vec3.normalize(this.axisNormalized, this.axis);
 
         this.scene.pushMatrix();
-        this.scene.rotate(this.angle,this.axisNormalized[0],this.axisNormalized[1],this.axisNormalized[2]);
+        this.scene.rotate(this.angle, this.axisNormalized[0], this.axisNormalized[1] , this.axisNormalized[2]);
         this.quad.display();
         this.scene.popMatrix();
-
-        
-
-        //this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 
