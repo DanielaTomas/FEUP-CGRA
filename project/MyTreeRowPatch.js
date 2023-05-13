@@ -8,7 +8,9 @@ export class MyTreeRowPatch extends CGFobject {
         this.trees = [];
 
         for (var i = 0; i < 6; i++){
-            this.trees[i] = new MyBillboard(scene, i * 3, 0 , 0);
+            var offsetX = Math.random() * 1.5 - 1;
+            var treeX = i * 3 + offsetX;
+            this.trees[i] = new MyBillboard(scene, treeX, 0 , 0);
         }
 
 
