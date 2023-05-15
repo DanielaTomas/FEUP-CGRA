@@ -13,27 +13,13 @@ export class MyBillboard extends CGFobject {
         this.imagePaths = ['images/billboardtree1.png', 'images/billboardtree2.png', 'images/billboardtree3.png'];
         this.randomIndex = Math.floor(Math.random() * this.imagePaths.length);
 
-
-
-        this.quad = new MyQuad(this.scene);
-
         this.x = x;
         this.y = y;
         this.z = z;
 
-        this.ownOrigin = vec3.fromValues(this.x, 0, this.z);
         this.quad = new MyQuad(scene);
-        this.normals = [...this.quad.normals];
 
-        this.cameraNormalized = vec3.create();
-        this.quadToCamera = vec3.create();
-        this.quadToCameraNormalized = vec3.create();
-        this.faceNormal = vec3.create();
-        this.axis = vec3.create();
-        this.axisNormalized = vec3.create();
-        this.angle = 0;
-
-        this.treeTex = new CGFtexture(this.scene, this.imagePaths[this.randomIndex]);
+        this.treeTex = new CGFtexture(scene, this.imagePaths[this.randomIndex]);
 
         this.material = new CGFappearance(scene);
         this.material.setAmbient(1, 1, 1, 1);
@@ -43,7 +29,7 @@ export class MyBillboard extends CGFobject {
         this.material.setTexture(this.treeTex);
 
 
-        this.treeShader = new CGFshader(this.scene.gl, "shaders/tree.vert", "shaders/tree.frag");
+        //this.treeShader = new CGFshader(scene.gl, "shaders/tree.vert", "shaders/tree.frag");
 
 
         this.initBuffers();
@@ -51,32 +37,26 @@ export class MyBillboard extends CGFobject {
 
     display() {
 
-        this.scene.setActiveShader(this.treeShader);
+        //this.scene.setActiveShader(this.treeShader);
 
         this.material.apply();
 
-        vec3.normalize(this.cameraNormalized, this.scene.camera.position);
+        this.cameraPosition = this.scene.camera.position;
 
-        this.faceNormal = this.quad.updateNormals(this.cameraNormalized);
-
-        vec3.subtract(this.quadToCamera, this.scene.camera.position, this.ownOrigin);
-        vec3.normalize(this.quadToCameraNormalized, this.quadToCamera);
-
-        this.angle = Math.acos(vec3.dot( this.quadToCameraNormalized, this.faceNormal));
-        vec3.cross(this.axis, this.quadToCameraNormalized , this.faceNormal);
-        vec3.normalize(this.axisNormalized, this.axis);
-        vec3.negate(this.axisNormalized, this.axisNormalized);
-
-        //console.log(this.axisNormalized)
+        this.dx = this.cameraPosition[0] - this.x;
+        this.dz = this.cameraPosition[2] - this.z;
+        this.angle = Math.atan2(this.dz, this.dx);
 
         this.scene.pushMatrix();
         this.scene.translate(this.x, this.y, this.z);
-        this.scene.rotate(this.angle, this.axisNormalized[0] , this.axisNormalized[1], this.axisNormalized[2]);
+        this.scene.rotate(Math.PI/2,0,0,1);
         
+        this.scene.rotate(this.angle, -1, 0, 0);
+
         this.quad.display();
         this.scene.popMatrix();
 
-        this.scene.setActiveShader(this.scene.defaultShader);
+        //this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 

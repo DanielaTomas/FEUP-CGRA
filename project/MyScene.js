@@ -55,6 +55,8 @@ export class MyScene extends CGFscene {
     this.eggXposition = [];
     this.eggZposition = [];
 
+    this.treeShader = new CGFshader(this.gl, "shaders/tree.vert", "shaders/tree.frag");
+
 
 
     for (var i = 0; i < this.eggs.length; i++){
@@ -147,20 +149,21 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
+    this.setActiveShader(this.treeShader);
     //this.tree.display();
-    //this.bird.display();
     this.treeGroupPatch.display();
     //this.treeRowPatch.display();
+    this.setActiveShader(this.defaultShader);
 
-    this.pushMatrix()
+    //this.bird.display();
+
+    /*this.pushMatrix()
     this.translate(80,-71,0);
     this.nest.display();
-    this.popMatrix();
-    
-    
+    this.popMatrix();*/
 
 
-    this.egg.eggMaterial.apply();
+   /* this.egg.eggMaterial.apply();
     this.pushMatrix();
     this.translate(80,-71,0);
     for ( var i = 0; i < this.eggs.length; i++){
@@ -169,7 +172,7 @@ export class MyScene extends CGFscene {
       this.eggs[i].display();
       this.popMatrix();
     }
-    this.popMatrix();
+    this.popMatrix();*/
     //this.egg.display();
     //this.appearance.apply();
 
