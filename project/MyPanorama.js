@@ -11,7 +11,7 @@ export class MyPanorama extends CGFobject {
 		super(scene);
 
 		this.texture = texture;
-        this.sphere = new MySphere(this.scene,30,30,true,1);
+        this.sphere = new MySphere(this.scene,15,15,true,1);
 
         this.sphereMaterial = new CGFappearance(this.scene);
         this.sphereMaterial.setTexture(this.texture)
@@ -30,7 +30,7 @@ export class MyPanorama extends CGFobject {
         this.scene.pushMatrix();
         this.sphereMaterial.apply();
 
-        this.scene.translate(this.scene.camera.position[0],this.scene.camera.position[1],this.scene.camera.position[2])
+        //this.scene.translate(this.scene.camera.position[0],this.scene.camera.position[1],this.scene.camera.position[2])
         this.scene.rotate(Math.PI/2,0,1,0)
         this.scene.scale(200,200,200)
         
