@@ -38,16 +38,8 @@ export class MyScene extends CGFscene {
 			new MyBirdEgg(this,30,30,1),
       new MyBirdEgg(this,30,30,1),
       new MyBirdEgg(this,30,30,1),
-      new MyBirdEgg(this,30,30,1),
+      new MyBirdEgg(this,30,30,1)
 		];
-
-    this.eggXposition = [];
-    this.eggZposition = [];
-
-    for (var i = 0; i < this.eggs.length; i++){
-      this.eggXposition[i] = Math.random() * (60 - (-60)) + (-60);
-      this.eggZposition[i] = Math.random() * (120 - (-70)) + (-70);
-    }
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -77,7 +69,6 @@ export class MyScene extends CGFscene {
       0.1,
       1000,
       vec3.fromValues(10, 10, 5),
-      //vec3.fromValues(0, -10, 0),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -141,11 +132,10 @@ export class MyScene extends CGFscene {
 
     this.egg.eggMaterial.apply();
     this.pushMatrix();
-    this.translate(80,-71,0);
     this.scale(0.3,0.3,0.3);
     for (var i = 0; i < this.eggs.length; i++){
       this.pushMatrix();
-      this.translate(this.eggXposition[i],0,this.eggZposition[i]);
+      this.translate(this.eggs[i].position.x,this.eggs[i].position.y,this.eggs[i].position.z);
       this.eggs[i].display();
       this.popMatrix();
     }

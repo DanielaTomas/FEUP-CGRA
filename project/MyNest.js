@@ -81,7 +81,9 @@ export class MyNest extends CGFobject {
             for (var i = 0; i < this.nestEggs.length; i++) {
                 this.scene.pushMatrix();
                 this.scene.translate(0,0.3,0);
-                //TODO colocar ovos espalhados no ninho this.scene.translate(i,0.3,i);
+                var offsetX = (i % 2 === 0 ? -1 : 1) * (Math.floor(i / 2));
+                var offsetZ = (i % 2 === 0 ? 0 : 1);
+                this.scene.translate(offsetX, 0.3, offsetZ);
                 this.scene.scale(0.3,0.3,0.3);
                 this.nestEggs[i].display();
                 this.scene.popMatrix();
