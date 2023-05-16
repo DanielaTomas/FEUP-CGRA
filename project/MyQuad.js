@@ -8,6 +8,7 @@ import {CGFobject} from '../lib/CGF.js';
 export class MyQuad extends CGFobject {
 	constructor(scene, coords) {
 		super(scene);
+		this.faceNormal = vec3.create();
 		this.initBuffers();
 		if (coords != undefined)
 			this.updateTexCoords(coords);
@@ -29,10 +30,10 @@ export class MyQuad extends CGFobject {
 
 		//Facing Z positive
 		this.normals = [
-			1, 0, 1,
-			1, 0, 1,
-			1, 0, 1,
-			1, 0, 1
+			1,0,1,
+			1,0,1,
+			1,0,1,
+			1,0,1,
 		];
 		
 		/*
@@ -47,12 +48,15 @@ export class MyQuad extends CGFobject {
 
 		this.texCoords = [
 			0, 1,
-			1, 1,
 			0, 0,
-			1, 0
-		]
+			1, 0,
+			1, 1,
+		];
+
 		this.primitiveType = this.scene.gl.TRIANGLES;
+
 		this.initGLBuffers();
+		//this.enableNormalViz();
 	}
 
 	/**

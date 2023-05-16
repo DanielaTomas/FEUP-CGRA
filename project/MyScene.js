@@ -4,6 +4,10 @@ import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
+import { MyBillboard } from "./MyBillboard.js";
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
+import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
+
 
 /**
  * MyScene
@@ -33,6 +37,9 @@ export class MyScene extends CGFscene {
     this.bird = new MyBird(this);
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
+    this.tree = new MyBillboard(this,0,0,0);
+    this.treeGroupPatch = new MyTreeGroupPatch(this);
+    this.treeRowPatch = new MyTreeRowPatch(this);
 
     this.eggs = [
 			new MyBirdEgg(this,30,30,1),
@@ -41,6 +48,11 @@ export class MyScene extends CGFscene {
       new MyBirdEgg(this,30,30,1)
 		];
 
+    this.treeShader = new CGFshader(this.gl, "shaders/tree.vert", "shaders/tree.frag");
+
+    this.treeShader.setUniformsValues({ //uWindDirection: (1,0,0) ,
+                                        uWindIntensity: 0.1,
+                                        uTime: 0})
     //Objects connected to MyInterface
     this.displayAxis = false;
     this.displayBird = true;
@@ -102,6 +114,7 @@ export class MyScene extends CGFscene {
   update(t) {
     this.checkKeys();
     this.bird.update(this.scaleFactor,this.speedFactor);
+    this.treeShader.setUniformsValues({uTime: t / 100 % 100})
 	}
 
   display() {
@@ -117,13 +130,23 @@ export class MyScene extends CGFscene {
 
     //Atualizar todas as luzes 
     this.lights[0].update();
+    //console.log("camera position x: " + this.camera.position[0] + " y:" + this.camera.position[1] + " z:" +this.camera.position[2])
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    
+
     if (this.displayBird) this.bird.display();
+
+
+    this.setActiveShader(this.treeShader);
+    this.tree.display();
+    //this.treeGroupPatch.display();
+    //this.treeRowPatch.display();
+    this.setActiveShader(this.defaultShader);
+
+    this.bird.display();
 
     this.pushMatrix()
     this.translate(80,-71,0);
@@ -142,7 +165,7 @@ export class MyScene extends CGFscene {
       this.popMatrix();
     }
     this.popMatrix();
-
+    
     //this.appearance.apply();
 
     this.pushMatrix();
