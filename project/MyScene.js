@@ -42,7 +42,8 @@ export class MyScene extends CGFscene {
 		];
 
     //Objects connected to MyInterface
-    this.displayAxis = true;
+    this.displayAxis = false;
+    this.displayBird = true;
     this.scaleFactor = 1;
     this.speedFactor = 1;
 
@@ -122,7 +123,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     
-    this.bird.display();
+    if (this.displayBird) this.bird.display();
 
     this.pushMatrix()
     this.translate(80,-71,0);
@@ -136,6 +137,7 @@ export class MyScene extends CGFscene {
     for (var i = 0; i < this.eggs.length; i++){
       this.pushMatrix();
       this.translate(this.eggs[i].position.x,this.eggs[i].position.y,this.eggs[i].position.z);
+      this.rotate(this.eggs[i].angle,1,0,0);
       this.eggs[i].display();
       this.popMatrix();
     }

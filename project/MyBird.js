@@ -154,9 +154,9 @@ export class MyBird extends CGFobject {//Gaspar
                         this.scene.nest.nestEggs.push(this.pickedUpEgg);
                     }
                     else {
-                        this.pickedUpEgg.position.x = this.position.x;
+                        this.pickedUpEgg.position.x = this.position.x/0.3;
                         this.pickedUpEgg.position.y = groundHeight;
-                        this.pickedUpEgg.position.z = this.position.z;
+                        this.pickedUpEgg.position.z = this.position.z/0.3;
                         this.scene.eggs.push(this.pickedUpEgg);
                     }
                     this.pickedUpEgg = null;

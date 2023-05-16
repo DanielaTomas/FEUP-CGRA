@@ -85,6 +85,7 @@ export class MyNest extends CGFobject {
                 var offsetZ = (i % 2 === 0 ? 0 : 1);
                 this.scene.translate(offsetX, 0.3, offsetZ);
                 this.scene.scale(0.3,0.3,0.3);
+                this.scene.rotate(this.nestEggs[i].angle,1,0,0);
                 this.nestEggs[i].display();
                 this.scene.popMatrix();
             }
