@@ -18,3 +18,7 @@ At this point we modelled eggs, modifying the code used for the sphere, the nest
 During this phase we also implemented egg catching/droping and nest interractions.
 
 ![Screenshot 4](screenshots/cg-t10g01-proj-4.png)
+
+We then implemented tree billboards using shaders to remove the excess from the image and using math we made it so the trees follow the camera´s horizontal movements.
+
+![Screenshot 5](screenshots/cg-t10g01-proj-5.png)

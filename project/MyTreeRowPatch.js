@@ -2,15 +2,19 @@ import {CGFobject, CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFte
 import { MyBillboard } from "./MyBillboard.js";
 
 export class MyTreeRowPatch extends CGFobject {
-    constructor(scene) {
+    constructor(scene,x ,y ,z) {
 		super(scene);
 
         this.trees = [];
 
+        this.x = x;
+        this.y = y;
+        this.z = z;
+
         for (var i = 0; i < 6; i++){
-            var offsetX = Math.random() * 1.5 - 1;
-            var treeX = i * 3 + offsetX;
-            this.trees[i] = new MyBillboard(scene, treeX, 0 , 0);
+            var offsetX = Math.random() * (0.5 - 0.2) + 0.2;
+            var treeX = i * 1.5 + offsetX;
+            this.trees[i] = new MyBillboard(scene, this.x , this.y , this.z + treeX);
         }
 
 

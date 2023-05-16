@@ -38,8 +38,8 @@ export class MyScene extends CGFscene {
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
     this.tree = new MyBillboard(this,0,0,0);
-    this.treeGroupPatch = new MyTreeGroupPatch(this);
-    this.treeRowPatch = new MyTreeRowPatch(this);
+    this.treeGroupPatch = new MyTreeGroupPatch(this,8.5,-8.5,2.5);
+    this.treeRowPatch = new MyTreeRowPatch(this,12,-8.5,-6);
 
     this.eggs = [
 			new MyBirdEgg(this,30,30,1),
@@ -141,12 +141,14 @@ export class MyScene extends CGFscene {
 
 
     this.setActiveShader(this.treeShader);
-    this.tree.display();
-    //this.treeGroupPatch.display();
-    //this.treeRowPatch.display();
+    //this.tree.display();
+    this.pushMatrix()
+    //this.translate(60,-68,35);
+    this.scale(8,8,8);
+    this.treeGroupPatch.display();
+    this.treeRowPatch.display();
+    this.popMatrix();
     this.setActiveShader(this.defaultShader);
-
-    this.bird.display();
 
     this.pushMatrix()
     this.translate(80,-71,0);
