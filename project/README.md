@@ -9,3 +9,12 @@ During the first steps of the project we learned how to build a sphere and later
 Afterwards we modelled our bird "Gaspar", based on an african gray parrot, using various geometric shapes.
 
 ![Screenshot 2](screenshots/cg-t10g01-proj-2.png)
+
+Then we added terrain, and with shaders we added elevation to using a heightmap and with an altimetry shifted the colors
+
+![Screenshot 3](screenshots/cg-t10g01-proj-3.png)
+
+At this point we modelled eggs, modifying the code used for the sphere, the nest using a circumference and cylinders.
+During this phase we also implemented egg catching/droping and nest interractions.
+
+![Screenshot 4](screenshots/cg-t10g01-proj-4.png)

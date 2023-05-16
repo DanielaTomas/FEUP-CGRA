@@ -2,7 +2,6 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
-import { MyUnitCube } from "./MyUnitCube.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyBillboard } from "./MyBillboard.js";
@@ -36,7 +35,6 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
-    this.unitCube = new MyUnitCube(this);
     this.nest = new MyNest(this);
     this.egg = new MyBirdEgg(this,30,30,1);
     this.tree = new MyBillboard(this,0,0,0);
@@ -47,31 +45,17 @@ export class MyScene extends CGFscene {
 			new MyBirdEgg(this,30,30,1),
       new MyBirdEgg(this,30,30,1),
       new MyBirdEgg(this,30,30,1),
-      new MyBirdEgg(this,30,30,1),
+      new MyBirdEgg(this,30,30,1)
 		];
-
-    
-
-    this.eggXposition = [];
-    this.eggZposition = [];
 
     this.treeShader = new CGFshader(this.gl, "shaders/tree.vert", "shaders/tree.frag");
 
     this.treeShader.setUniformsValues({ //uWindDirection: (1,0,0) ,
                                         uWindIntensity: 0.1,
                                         uTime: 0})
-
-
-
-    for (var i = 0; i < this.eggs.length; i++){
-      this.eggXposition[i] = Math.random() * (20 - (-20)) + (-20);
-      this.eggZposition[i] = Math.random() * (80 - (-30)) + (-30);
-    }
-
-    
-
     //Objects connected to MyInterface
-    this.displayAxis = true;
+    this.displayAxis = false;
+    this.displayBird = true;
     this.scaleFactor = 1;
     this.speedFactor = 1;
 
@@ -98,7 +82,6 @@ export class MyScene extends CGFscene {
       0.1,
       1000,
       vec3.fromValues(10, 10, 5),
-      //vec3.fromValues(0, -10, 0),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -154,31 +137,35 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
+    if (this.displayBird) this.bird.display();
+
+
     this.setActiveShader(this.treeShader);
     this.tree.display();
     //this.treeGroupPatch.display();
     //this.treeRowPatch.display();
     this.setActiveShader(this.defaultShader);
 
-    //this.bird.display();
+    this.bird.display();
 
-    /*this.pushMatrix()
+    this.pushMatrix()
     this.translate(80,-71,0);
     this.nest.display();
-    this.popMatrix();*/
+    this.popMatrix();
 
 
-   /* this.egg.eggMaterial.apply();
+    this.egg.eggMaterial.apply();
     this.pushMatrix();
-    this.translate(80,-71,0);
-    for ( var i = 0; i < this.eggs.length; i++){
+    this.scale(0.3,0.3,0.3);
+    for (var i = 0; i < this.eggs.length; i++){
       this.pushMatrix();
-      this.translate(this.eggXposition[i],0,this.eggZposition[i]);
+      this.translate(this.eggs[i].position.x,this.eggs[i].position.y,this.eggs[i].position.z);
+      this.rotate(this.eggs[i].angle,1,0,0);
       this.eggs[i].display();
       this.popMatrix();
     }
-    this.popMatrix();*/
-    //this.egg.display();
+    this.popMatrix();
+    
     //this.appearance.apply();
 
     this.pushMatrix();

@@ -26,9 +26,9 @@ export class MyTerrain extends CGFobject {
 
     initMaterials(scene){
 
-        this.terrainTex = new CGFtexture(this.scene, 'images/terrain.jpg');
+        this.terrainTex = new CGFtexture(scene, 'images/terrain.jpg');
 
-        this.appearance = new CGFappearance(this.scene);
+        this.appearance = new CGFappearance(scene);
         this.appearance.setTexture(this.terrainTex);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
         this.appearance.setAmbient(10.0, 10.0, 10.0, 1.0);

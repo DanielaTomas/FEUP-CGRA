@@ -44,8 +44,9 @@ export class MyBird extends CGFobject {//Gaspar
         this.initY = 0;
         this.isCatching = false;
         this.animDuration = 2;
-        this.pickedUpEgg = null;//referencia ao ovo apanhado
-
+        this.pickedUpEgg = null; //referência ao ovo apanhado
+        this.pickUpMargin = 2;
+        this.dropEggMargin = 10;
         this.initMaterials(this.scene);
         this.initBuffers();
 
@@ -80,12 +81,14 @@ export class MyBird extends CGFobject {//Gaspar
         this.eyesMaterial.setShininess(10.0);
 
     }
+
     turn(v) {
         this.orientation = this.orientation + 0.1*v;
     }
     accelerate(v) {
         this.speed = this.speed + 0.01 * v;
     }
+
     catchEgg(groundHeight, originalAltitude) {
         const duration = 2000;
         const distance = originalAltitude - groundHeight;
@@ -99,6 +102,20 @@ export class MyBird extends CGFobject {//Gaspar
           if (elapsedTime < halfDuration) {
             //console.log("descending")
             this.position.y = originalAltitude - velocity * elapsedTime;
+            
+            if(this.pickedUpEgg === null) {
+                for (var i = 0; i < this.scene.eggs.length; i++){
+                    if(this.position.x >= (this.scene.eggs[i].position.x*0.3 - this.pickUpMargin) && this.position.x <= (this.scene.eggs[i].position.x*0.3 + this.pickUpMargin)
+                        && this.position.y >= -60 //TODO arranjar y?
+                        && this.position.z >= (this.scene.eggs[i].position.z*0.3 - this.pickUpMargin) && this.position.z <= (this.scene.eggs[i].position.z*0.3 + this.pickUpMargin)) {
+                        //console.log("pickedUpEgg " + i)
+                        this.pickedUpEgg = this.scene.eggs[i];
+                        this.pickedUpEgg.position.y = -2.5;
+                        this.scene.eggs.splice(i, 1);
+                        break;
+                    }
+                }
+            }
           } 
           else if (elapsedTime < duration) {
             //console.log("ascending")
@@ -115,7 +132,40 @@ export class MyBird extends CGFobject {//Gaspar
           }
         }, 10);
     }
-      
+
+    dropEgg(originalAltitude,groundHeight) {
+
+        const duration = 2000;
+        const distance = originalAltitude - groundHeight;
+        let elapsedTime = 0;
+        this.startTime = Date.now();
+
+        const interval = setInterval(() => {
+            elapsedTime = Date.now() - this.startTime;
+            if (elapsedTime < duration) {
+                const t = elapsedTime / duration;
+                this.pickedUpEgg.position.y = originalAltitude - t * distance;
+            } 
+            else {
+                if(this.pickedUpEgg !== null) {
+                    if(this.position.x <= 80+this.dropEggMargin && this.position.x >= 80-this.dropEggMargin
+                        && this.position.y <= -71+this.dropEggMargin && this.position.y >= -71-this.dropEggMargin //TODO arranjar y?
+                        && this.position.z <= this.dropEggMargin && this.position.z >= -this.dropEggMargin) {
+                        this.scene.nest.nestEggs.push(this.pickedUpEgg);
+                    }
+                    else {
+                        this.pickedUpEgg.position.x = this.position.x/0.3;
+                        this.pickedUpEgg.position.y = groundHeight;
+                        this.pickedUpEgg.position.z = this.position.z/0.3;
+                        this.scene.eggs.push(this.pickedUpEgg);
+                    }
+                    this.pickedUpEgg = null;
+                }
+                clearInterval(interval);
+            }
+        }, 10);
+    }
+
     update(scaleFactor,speedFactor) {
         
         this.scale = scaleFactor;
@@ -130,9 +180,8 @@ export class MyBird extends CGFobject {//Gaspar
         //amplitude * Math.sin(2 * Math.PI * frequency * x);
 
         if(this.isCatching){
-            this.catchEgg(-40,this.initY)
+            this.catchEgg(-71,this.initY)
         }
-
         if (this.scene.gui.isKeyPressed("KeyR")) {
             this.orientation = 0;
             this.speed = 0;
@@ -160,10 +209,15 @@ export class MyBird extends CGFobject {//Gaspar
                 this.turn(-speedFactor);
             }
             if (this.scene.gui.isKeyPressed("KeyP")) {
-                if(!this.isCatching) {
+                if(!this.isCatching && this.pickedUpEgg === null) {
                     this.isCatching = true;
                     this.startTime = Date.now();
                     this.initY = this.position.y;
+                }
+            }
+            if (this.scene.gui.isKeyPressed("KeyO")) {
+                if(!this.isCatching && this.pickedUpEgg !== null) {
+                    this.dropEgg(-2.5,-71/0.3);
                 }
             }
         }
@@ -171,16 +225,23 @@ export class MyBird extends CGFobject {//Gaspar
 
     display(){
 
-        this.birdAppearance.apply();
-
-        //this.pickedUpEgg.display();
-
         this.scene.pushMatrix();
 
         this.scene.translate(0,this.animVal,0);
         this.scene.translate(this.position.x,this.position.y,this.position.z);
         this.scene.rotate(this.orientation,0,1,0);
         this.scene.scale(this.scale,this.scale,this.scale);
+
+        if(this.pickedUpEgg !== null) {
+            this.scene.egg.eggMaterial.apply();
+            this.scene.pushMatrix();
+            this.scene.scale(0.3,0.3,0.3);
+            this.scene.translate(0,this.pickedUpEgg.position.y,0);
+            this.pickedUpEgg.display();
+            this.scene.popMatrix();
+        }
+
+        this.birdAppearance.apply();
 
         this.scene.pushMatrix();//Corpo
         this.scene.scale(1,0.35,0.35)//elipse

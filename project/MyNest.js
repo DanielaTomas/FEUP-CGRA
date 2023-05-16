@@ -17,7 +17,7 @@ export class MyNest extends CGFobject {
         this.quad = new MyQuad(this.scene);
 
         this.angles = [];
-
+        this.nestEggs = [];
         this.scene.enableTextures(true);
 
         this.initMaterials(this.scene);
@@ -75,7 +75,20 @@ export class MyNest extends CGFobject {
         }
         this.scene.popMatrix();
 
+        if(this.nestEggs.length !== 0) {
+            this.scene.egg.eggMaterial.apply();
+          
+            for (var i = 0; i < this.nestEggs.length; i++) {
+                this.scene.pushMatrix();
+                this.scene.translate(0,0.3,0);
+                var offsetX = (i % 2 === 0 ? -1 : 1) * (Math.floor(i / 2));
+                var offsetZ = (i % 2 === 0 ? 0 : 1);
+                this.scene.translate(offsetX, 0.3, offsetZ);
+                this.scene.scale(0.3,0.3,0.3);
+                this.scene.rotate(this.nestEggs[i].angle,1,0,0);
+                this.nestEggs[i].display();
+                this.scene.popMatrix();
+            }
         }
-
-
+    }
 }

@@ -18,6 +18,12 @@ export class MyBirdEgg extends CGFobject {
     this.drawInsideOut = false;
 		this.texMult = texMult;
 
+    this.position = [];
+    this.position.y = -71/0.3;
+    this.position.x = 80/0.3 + Math.random() * (60 - (-60)) + (-60);
+    this.position.z = Math.random() * (120 - (-70)) + (-70);
+    this.angle = Math.random() * (Math.PI/2 - (-Math.PI/2)) + (-Math.PI/2);
+
     this.eggTexture = new CGFtexture(this.scene, "images/textura_ovo.jpg");
 
     this.eggMaterial = new CGFappearance(this.scene);
