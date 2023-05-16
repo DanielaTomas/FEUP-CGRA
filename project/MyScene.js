@@ -57,6 +57,10 @@ export class MyScene extends CGFscene {
 
     this.treeShader = new CGFshader(this.gl, "shaders/tree.vert", "shaders/tree.frag");
 
+    this.treeShader.setUniformsValues({ //uWindDirection: (1,0,0) ,
+                                        uWindIntensity: 0.1,
+                                        uTime: 0})
+
 
 
     for (var i = 0; i < this.eggs.length; i++){
@@ -127,6 +131,7 @@ export class MyScene extends CGFscene {
   update(t) {
     this.checkKeys();
     this.bird.update(this.scaleFactor,this.speedFactor);
+    this.treeShader.setUniformsValues({uTime: t / 100 % 100})
 	}
 
   display() {
@@ -150,8 +155,8 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
     this.setActiveShader(this.treeShader);
-    //this.tree.display();
-    this.treeGroupPatch.display();
+    this.tree.display();
+    //this.treeGroupPatch.display();
     //this.treeRowPatch.display();
     this.setActiveShader(this.defaultShader);
 
