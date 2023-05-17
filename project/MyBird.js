@@ -106,14 +106,14 @@ export class MyBird extends CGFobject {//Gaspar
             if(this.pickedUpEgg === null) {
                 for (var i = 0; i < this.scene.eggs.length; i++){
                     if(this.position.x >= (this.scene.eggs[i].position.x*0.3 - this.pickUpMargin) && this.position.x <= (this.scene.eggs[i].position.x*0.3 + this.pickUpMargin)
-                        && this.position.y >= -60 //TODO arranjar y?
+                        && this.position.y >= -65 //TODO arranjar y?
                         && this.position.z >= (this.scene.eggs[i].position.z*0.3 - this.pickUpMargin) && this.position.z <= (this.scene.eggs[i].position.z*0.3 + this.pickUpMargin)) {
                         //console.log("pickedUpEgg " + i)
                         this.pickedUpEgg = this.scene.eggs[i];
                         this.pickedUpEgg.position.y = -2.5;
                         this.scene.eggs.splice(i, 1);
                         break;
-                    }
+                     }
                 }
             }
           } 

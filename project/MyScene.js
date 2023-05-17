@@ -36,21 +36,21 @@ export class MyScene extends CGFscene {
     this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
     this.nest = new MyNest(this);
-    this.egg = new MyBirdEgg(this,30,30,1);
+    this.egg = new MyBirdEgg(this,15,6,1);
     this.tree = new MyBillboard(this,0,0,0);
     this.treeGroupPatch = new MyTreeGroupPatch(this,8.5,-8.5,2.5);
     this.treeRowPatch = new MyTreeRowPatch(this,12,-8.5,-6);
 
     this.eggs = [
-			new MyBirdEgg(this,30,30,1),
-      new MyBirdEgg(this,30,30,1),
-      new MyBirdEgg(this,30,30,1),
-      new MyBirdEgg(this,30,30,1)
+			new MyBirdEgg(this,15,6,1),
+      new MyBirdEgg(this,15,6,1),
+      new MyBirdEgg(this,15,6,1),
+      new MyBirdEgg(this,15,6,1)
 		];
 
     this.treeShader = new CGFshader(this.gl, "shaders/tree.vert", "shaders/tree.frag");
 
-    this.treeShader.setUniformsValues({ //uWindDirection: (1,0,0) ,
+    this.treeShader.setUniformsValues({ //uWindDirection: (1,0,0),
                                         uWindIntensity: 0.1,
                                         uTime: 0})
     //Objects connected to MyInterface
@@ -168,6 +168,7 @@ export class MyScene extends CGFscene {
     }
     this.popMatrix();
     
+    //this.egg.display();
     //this.appearance.apply();
 
     this.pushMatrix();

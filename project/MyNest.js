@@ -1,5 +1,5 @@
 import {CGFobject, CGFappearance, CGFtexture} from '../lib/CGF.js';
-import { MyCylinder } from "./MyCylinder.js";
+import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 import { MyQuad } from "./MyQuad.js";
 import { MyCircumference } from "./MyCircumference.js";
 
@@ -12,7 +12,7 @@ export class MyNest extends CGFobject {
 	constructor(scene) {
 		super(scene);
 
-        this.cylinder = new MyCylinder(this.scene,4,2);
+        this.unitCubeQuad = new MyUnitCubeQuad(this.scene);
         this.circumference = new MyCircumference(this.scene,20);
         this.quad = new MyQuad(this.scene);
 
@@ -27,10 +27,10 @@ export class MyNest extends CGFobject {
     
     initMaterials(scene) {
 
-        this.woodTexture = new CGFtexture(this.scene, "images/textura_ninho.jpg");
+        this.nestTexture = new CGFtexture(this.scene, "images/textura_ninho.jpg");
 
         this.nestMaterial = new CGFappearance(scene);
-        this.nestMaterial.setTexture(this.woodTexture);
+        this.nestMaterial.setTexture(this.nestTexture);
         this.nestMaterial.setTextureWrap('REPEAT', 'REPEAT');
         this.nestMaterial.setAmbient(10.0, 10.0, 10.0, 1.0);
         this.nestMaterial.setDiffuse(0.8, 0.8, 0.8, 1.0);
@@ -57,17 +57,10 @@ export class MyNest extends CGFobject {
             this.scene.rotate(ang,0,1,0);
 
             this.scene.pushMatrix();
-            this.scene.translate(1.8,0,-0.4);
+            this.scene.translate(1.8,-0.2,-0.4);
             this.scene.rotate(Math.PI/4,1,0,-1);
-            this.scene.scale(0.1,1,0.1);
-            this.cylinder.display();
-            this.scene.popMatrix();
-
-            this.scene.pushMatrix();
-            this.scene.translate(1.8,0,0.4);
-            this.scene.rotate(-Math.PI/4,1,0,1);
-            this.scene.scale(0.1,1,0.1);
-            this.cylinder.display();
+            this.scene.scale(0.5,1,0.5);
+            this.unitCubeQuad.display();
             this.scene.popMatrix();
 
             this.scene.popMatrix();

@@ -6,7 +6,6 @@ import {CGFobject, CGFtexture, CGFappearance} from '../lib/CGF.js';
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
- * @param drawInsideOut - draw sphere so its only visible from the inside
  * @param texMult - makes texture be drawn more time
  */
 export class MyBirdEgg extends CGFobject {
@@ -15,7 +14,6 @@ export class MyBirdEgg extends CGFobject {
 
 		this.slices = slices;
 		this.stacks = stacks;
-    this.drawInsideOut = false;
 		this.texMult = texMult;
 
     this.position = [];
@@ -24,21 +22,23 @@ export class MyBirdEgg extends CGFobject {
     this.position.z = Math.random() * (120 - (-70)) + (-70);
     this.angle = Math.random() * (Math.PI/2 - (-Math.PI/2)) + (-Math.PI/2);
 
-    this.eggTexture = new CGFtexture(this.scene, "images/textura_ovo.jpg");
+    this.initMaterials(this.scene)
+		this.initBuffers();
+    this.eggMaterial.apply();
+	}
 
-    this.eggMaterial = new CGFappearance(this.scene);
+  initMaterials(scene) {
+    this.eggTexture = new CGFtexture(scene, "images/textura_ovo.jpg");
+
+    this.eggMaterial = new CGFappearance(scene);
     this.eggMaterial.setTexture(this.eggTexture);
     this.eggMaterial.setTextureWrap('REPEAT', 'REPEAT');
     this.eggMaterial.setAmbient(10.0, 10.0, 10.0, 1.0);
     this.eggMaterial.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.eggMaterial.setSpecular(0.8, 0.8, 0.8, 1.0);
 
+  }
 
-		this.initBuffers();
-    this.eggMaterial.apply();
-	}
-
-	
 	initBuffers() {
 
 		    this.vertices = [];
@@ -67,8 +67,6 @@ export class MyBirdEgg extends CGFobject {
                 y *= 1.7; // Modify the scale factor as desired to control the elongation
               }
 
-
-
               var z = Math.sin(-beta) * sinAlpha;
               this.vertices.push(x, y, z);
               this.texCoords.push(long/this.slices*this.texMult, lat/this.stacks*this.texMult);
@@ -81,39 +79,37 @@ export class MyBirdEgg extends CGFobject {
                 
                 this.indices.push( current + 1, current, next,
                                     current + 1, next, next +1);
-
-                          
+      
               }
 
               this.normals.push(-x, -y, -z);
 
               beta += betaAng;
-      
               
             }
             alpha += alphaAng;
           }
 
 
-        //The defined indices (and corresponding vertices)
+    //The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
 		this.primitiveType = this.scene.gl.TRIANGLES;
 
 		this.initGLBuffers();
 	}
 
-    updateBuffers(){
-        // reinitialize buffers
-        this.initBuffers();
-        this.initNormalVizBuffers();
-    }
+  updateBuffers(){
+      // reinitialize buffers
+      this.initBuffers();
+      this.initNormalVizBuffers();
+  }
 
-    setLineMode() { 
+  setLineMode() { 
 		this.indices=this.indicesLines;
 		this.primitiveType=this.scene.gl.LINES;
 	};
 
-    setFillMode() { 
+  setFillMode() { 
 		this.indices=this.indicesTris;
 		this.primitiveType=this.scene.gl.TRIANGLES;
 	}
