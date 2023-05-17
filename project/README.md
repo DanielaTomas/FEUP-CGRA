@@ -22,3 +22,7 @@ During this phase we also implemented egg catching/droping and nest interraction
 We then implemented tree billboards using shaders to remove the excess from the image and using math we made it so the trees follow the camera´s horizontal movements.
 
 ![Screenshot 5](screenshots/cg-t10g01-proj-5.png)
+
+For the final point we implemented the effect of wind on trees, making them wobble slightly.
+
+![Screenshot 6](screenshots/cg-t10g01-proj-6.png)
