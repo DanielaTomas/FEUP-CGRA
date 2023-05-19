@@ -7,6 +7,7 @@ import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyBillboard } from "./MyBillboard.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
+import {CGFOBJModel} from "./CGFOBJModel.js";
 
 
 /**
@@ -32,6 +33,7 @@ export class MyScene extends CGFscene {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     //Initialize scene objects
+    this.amogus = new CGFOBJModel(this, 'models/amogus.obj');
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this);
     this.bird = new MyBird(this);
@@ -64,6 +66,10 @@ export class MyScene extends CGFscene {
     this.panoramaTexture = new CGFtexture(this, "images/panorama_do_gaspar.jpg");
 
     this.panorama = new MyPanorama(this, this.panoramaTexture)
+
+    this.amogusMaterial = new CGFappearance(this);
+    this.amogusMaterial.setColor(0,1,0.4,0);
+
 
     this.setUpdatePeriod(50);
 
@@ -132,8 +138,20 @@ export class MyScene extends CGFscene {
     this.lights[0].update();
     //console.log("camera position x: " + this.camera.position[0] + " y:" + this.camera.position[1] + " z:" +this.camera.position[2])
 
+
+    this.amogusMaterial.apply();
+    this.pushMatrix();
+    this.translate(70,-71.1,75);
+    this.rotate(Math.PI,0,1,0);
+    //this.translate(0,0,60);
+    this
+    this.scale(0.01,0.01,0.01);
+    this.amogus.display();
+    this.popMatrix();
     // Draw axis
     if (this.displayAxis) this.axis.display();
+
+    
 
     // ---- BEGIN Primitive drawing section
 
@@ -179,6 +197,8 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.panorama.display();
+
+    
 
     // ---- END Primitive drawing section
   }

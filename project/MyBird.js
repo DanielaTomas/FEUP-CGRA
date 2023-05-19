@@ -302,6 +302,8 @@ export class MyBird extends CGFobject {//Gaspar
         this.scene.popMatrix();
 
         this.scene.popMatrix();
+
+        this.scene.setDefaultAppearance();
     }
 
 }

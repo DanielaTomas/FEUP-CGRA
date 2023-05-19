@@ -37,6 +37,8 @@ export class MyPanorama extends CGFobject {
         this.sphere.display();
         this.scene.popMatrix();
 
+        this.scene.setDefaultAppearance();
+
     }
 
 }

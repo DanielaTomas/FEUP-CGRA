@@ -56,6 +56,8 @@ export class MyBillboard extends CGFobject {
         this.quad.display();
         this.scene.popMatrix();
 
+        this.scene.setDefaultAppearance();
+
         //this.scene.setActiveShader(this.scene.defaultShader);
 
     }

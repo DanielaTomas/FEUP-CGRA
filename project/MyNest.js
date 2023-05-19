@@ -83,5 +83,7 @@ export class MyNest extends CGFobject {
                 this.scene.popMatrix();
             }
         }
+
+        this.scene.setDefaultAppearance();
     }
 }
