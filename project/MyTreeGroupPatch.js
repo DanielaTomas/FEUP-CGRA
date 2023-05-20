@@ -1,4 +1,4 @@
-import {CGFobject, CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
+import {CGFobject} from "../lib/CGF.js";
 import { MyBillboard } from "./MyBillboard.js";
 
 export class MyTreeGroupPatch extends CGFobject {
